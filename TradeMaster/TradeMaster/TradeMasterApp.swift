@@ -10,8 +10,9 @@ import SwiftData
 
 @main
 struct TradeMasterApp: App {
+    let themeManager = ThemeManager() // Initialize ThemeManager
     var body: some Scene {
         WindowGroup {
-            SplashScreenView()
+            SplashScreenView().environmentObject(themeManager) // Provide the theme manager
         }    }
 }

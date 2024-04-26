@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct Theme {
-    let backgroundColor: Color
-    let textColor: Color
+    let sunBackgroundColor: Color
+    let sunTextColor: Color
+    let moonBackgroundColor: Color
+    let moonTextColor: Color
 }
