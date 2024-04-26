@@ -9,9 +9,7 @@ import SwiftUI
 
 struct RegistrationView: View {
     @EnvironmentObject var themeManager: ThemeManager // Inject the theme manager
-    
-    @State private var isSunTheme = true // Track the current theme (true for sun, false for moon)
-    
+        
     var body: some View {
         VStack {
             HStack {
@@ -31,46 +29,14 @@ struct RegistrationView: View {
             
             Spacer().frame(height: 40)
             
-            Image("Invest")
+            Image("RegistrationScreen")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 350, height: 400)
-            
-            HStack(alignment: .top, spacing: 12) {
-                ZStack() {
-                  Rectangle()
-                    .foregroundColor(.clear)
-                    .frame(width: 48, height: 8)
-                    .background(Color(red: 0.07, green: 0.32, blue: 0.45).opacity(0.15))
-                    .cornerRadius(4)
-                    .offset(x: 0, y: 0)
-                }
-                .frame(width: 48, height: 8)
-                ZStack() {
-                  Rectangle()
-                    .foregroundColor(.clear)
-                    .frame(width: 48, height: 8)
-                    .background(Color(red: 0.07, green: 0.32, blue: 0.45).opacity(0.15))
-                    .cornerRadius(4)
-                    .offset(x: 0, y: 0)
-                }
-                .frame(width: 48, height: 8)
-                ZStack() {
-                  Rectangle()
-                    .foregroundColor(.clear)
-                    .frame(width: 24, height: 8)
-                    .background(Color(red: 0.07, green: 0.32, blue: 0.45))
-                    .cornerRadius(4)
-                    .offset(x: 0, y: 0)
-                }
-                .frame(width: 24, height: 8)
-              }
-              .padding(12)
-              .frame(width: 168)
 
-            Spacer().frame(height: 40)
+            Spacer().frame(height: 180)
             
-            Text("Invest and Earn\nfrom anywhere\nin the world")
+            Text("Create your account")
                 .font(Font.custom("Roboto", size: 36).weight(.bold))
                 .tracking(0.08)
                 .multilineTextAlignment(.center) // Align text to the center
@@ -79,11 +45,27 @@ struct RegistrationView: View {
 
 
             Spacer().frame(height: 40)
-            
+           
             Button(action: {
                 navigateToNextPage()
             }) {
-                Text("Next")
+                Text("Sign In")
+                    .font(Font.custom("Roboto", size: 28).weight(.black))
+                    .tracking(0.10)
+                    .lineSpacing(24)
+                    .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.96))
+                    .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+            }
+            .frame(width: 358, height: 40)
+            .background(Color(red: 0.07, green: 0.32, blue: 0.45))
+            .cornerRadius(4)
+            
+            Spacer().frame(height: 20)
+
+            Button(action: {
+                navigateToNextPage()
+            }) {
+                Text("Sign Up")
                     .font(Font.custom("Roboto", size: 28).weight(.black))
                     .tracking(0.10)
                     .lineSpacing(24)

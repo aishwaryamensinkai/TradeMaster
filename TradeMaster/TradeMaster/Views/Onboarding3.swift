@@ -10,7 +10,6 @@ import SwiftUI
 struct Onboarding3: View {
     @EnvironmentObject var themeManager: ThemeManager // Inject the theme manager
     
-    @State private var isSunTheme = true // Track the current theme (true for sun, false for moon)
     
     var body: some View {
         VStack {
@@ -103,11 +102,11 @@ struct Onboarding3: View {
     
     func navigateToNextPage() {
             // Create an instance of the next view
-            let RegistrationView = RegistrationView().environmentObject(themeManager)
+            let Registration = RegistrationView().environmentObject(themeManager)
             
             // Present the next view using NavigationView
             let nextView = NavigationView {
-                RegistrationView
+                Registration
             }
             
             // Get the relevant window scene
