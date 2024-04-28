@@ -47,23 +47,27 @@ struct RegistrationView: View {
             Spacer().frame(height: 40)
            
             Button(action: {
-                navigateToNextPage()
+                navigateToSignIn()
             }) {
                 Text("Sign In")
                     .font(Font.custom("Roboto", size: 28).weight(.black))
                     .tracking(0.10)
                     .lineSpacing(24)
-                    .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.96))
+                    .foregroundColor(Color(red: 0.07, green: 0.32, blue: 0.45)) // Text color
                     .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
             }
             .frame(width: 358, height: 40)
-            .background(Color(red: 0.07, green: 0.32, blue: 0.45))
+            .background(Color.clear) // Set background color to clear
             .cornerRadius(4)
-            
+            .overlay(
+                RoundedRectangle(cornerRadius: 4)
+                    .stroke(Color(red: 0.07, green: 0.32, blue: 0.45), lineWidth: 2) // Border color
+            )
+
             Spacer().frame(height: 20)
 
             Button(action: {
-                navigateToNextPage()
+                navigateToSignUp()
             }) {
                 Text("Sign Up")
                     .font(Font.custom("Roboto", size: 28).weight(.black))
@@ -83,13 +87,32 @@ struct RegistrationView: View {
         .ignoresSafeArea()
     }
     
-    func navigateToNextPage() {
+    func navigateToSignUp() {
             // Create an instance of the next view
-            let RegistrationView = RegistrationView().environmentObject(themeManager)
+            let SignUpView = SignUp().environmentObject(themeManager)
             
             // Present the next view using NavigationView
             let nextView = NavigationView {
-                RegistrationView
+                SignUpView
+            }
+            
+            // Get the relevant window scene
+                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                    if let window = windowScene.windows.first {
+                        // Present the navigation view
+                        window.rootViewController = UIHostingController(rootView: nextView)
+                        window.makeKeyAndVisible()
+                    }
+                }
+        }
+    
+    func navigateToSignIn() {
+            // Create an instance of the next view
+            let SignInView = SignIn().environmentObject(themeManager)
+            
+            // Present the next view using NavigationView
+            let nextView = NavigationView {
+                SignInView
             }
             
             // Get the relevant window scene

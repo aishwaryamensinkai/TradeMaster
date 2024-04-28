@@ -21,6 +21,8 @@
 		1B8E58E62BDB35BE009DB97A /* Onboarding2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8E58E52BDB35BE009DB97A /* Onboarding2.swift */; };
 		1B8E58E82BDB3A68009DB97A /* Onboarding3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8E58E72BDB3A68009DB97A /* Onboarding3.swift */; };
 		1B8E58EA2BDB4061009DB97A /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8E58E92BDB4061009DB97A /* RegistrationView.swift */; };
+		1B8E58EC2BDD7425009DB97A /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8E58EB2BDD7424009DB97A /* SignIn.swift */; };
+		1B8E58EE2BDD7434009DB97A /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8E58ED2BDD7434009DB97A /* SignUp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +41,8 @@
 		1B8E58E52BDB35BE009DB97A /* Onboarding2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding2.swift; sourceTree = "<group>"; };
 		1B8E58E72BDB3A68009DB97A /* Onboarding3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding3.swift; sourceTree = "<group>"; };
 		1B8E58E92BDB4061009DB97A /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
+		1B8E58EB2BDD7424009DB97A /* SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
+		1B8E58ED2BDD7434009DB97A /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +104,8 @@
 				1B8E58E52BDB35BE009DB97A /* Onboarding2.swift */,
 				1B8E58E72BDB3A68009DB97A /* Onboarding3.swift */,
 				1B8E58E92BDB4061009DB97A /* RegistrationView.swift */,
+				1B8E58EB2BDD7424009DB97A /* SignIn.swift */,
+				1B8E58ED2BDD7434009DB97A /* SignUp.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -199,9 +205,11 @@
 				1B54A9EB2BBFA78D00801A6B /* ThemePageView.swift in Sources */,
 				1B54A9ED2BBFA78D00801A6B /* Item.swift in Sources */,
 				1B8E58DE2BD9EE9B009DB97A /* Theme.swift in Sources */,
+				1B8E58EC2BDD7425009DB97A /* SignIn.swift in Sources */,
 				1B54A9E92BBFA78D00801A6B /* TradeMasterApp.swift in Sources */,
 				1B8E58E22BDAAF54009DB97A /* Constants.swift in Sources */,
 				1B8E58DA2BD97F74009DB97A /* SplashScreenView.swift in Sources */,
+				1B8E58EE2BDD7434009DB97A /* SignUp.swift in Sources */,
 				1B8E58E02BDAA5D8009DB97A /* ThemeManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
