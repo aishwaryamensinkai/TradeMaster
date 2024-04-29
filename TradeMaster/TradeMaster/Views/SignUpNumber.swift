@@ -1,13 +1,13 @@
 //
-//  SignUp.swift
+//  SignUpNumber.swift
 //  TradeMaster
 //
-//  Created by Aishwarya Girish Mensinkai on 4/27/24.
+//  Created by Aishwarya Girish Mensinkai on 4/28/24.
 //
 
 import SwiftUI
 
-struct SignUp: View {
+struct SignUpNumber: View {
     @EnvironmentObject var themeManager: ThemeManager // Inject the theme manager
     @State private var email: String = ""
     @State private var password: String = ""
@@ -81,7 +81,7 @@ struct SignUp: View {
                 
               VStack(alignment: .leading, spacing: 4) {
                 HStack(alignment: .top, spacing: 135) {
-                  Text("Email")
+                  Text("Mobile Number")
                     .font(Font.custom("Roboto", size: 12))
                     .tracking(0.40)
                     .lineSpacing(16)
@@ -90,10 +90,10 @@ struct SignUp: View {
                     .background(themeManager.currentTheme.sunBackgroundColor) // Use sun background color for demonstration
                     
                     Button(action: {
-                        // Action when the "Sign In with Phone Number" is clicked
-                        navigateToNumber()
+                        // Action when the "Sign In with Phone Email" is clicked
+                        navigateToEmail()
                     }) {
-                        Text("Sign Up with Phone Number")
+                        Text("Sign Up with Email")
                             .font(Font.custom("Roboto", size: 14))
                             .tracking(0.40)
                             .lineSpacing(16)
@@ -102,7 +102,7 @@ struct SignUp: View {
                     .buttonStyle(PlainButtonStyle()) // Use PlainButtonStyle to remove default button styling
                 }
                   
-                TextField("Enter your email", text: $email)
+                TextField("Enter your Number", text: $email)
                       .font(Font.custom("Roboto", size: 16))
                       .padding(EdgeInsets(top: 10, leading: 16, bottom: 10, trailing: 16))
                       .frame(width: 358)
@@ -258,13 +258,13 @@ struct SignUp: View {
         }
     }
 
-    func navigateToNumber() {
+    func navigateToEmail() {
         // Create an instance of the next view
-        let SignUpNumberViewPage = SignUpNumber().environmentObject(themeManager)
+        let SignUpViewPage = SignUp().environmentObject(themeManager)
 
         // Present the next view using NavigationView
         let nextView = NavigationView {
-            SignUpNumberViewPage
+            SignUpViewPage
         }
 
         // Get the relevant window scene
@@ -280,9 +280,9 @@ struct SignUp: View {
 }
 
 #if DEBUG
-struct SignUp_Previews: PreviewProvider {
+struct SignUpNumber_Previews: PreviewProvider {
     static var previews: some View {
-        SignUp().environmentObject(ThemeManager()) // Provide the theme manager
+        SignUpNumber().environmentObject(ThemeManager()) // Provide the theme manager
     }
 }
 #endif

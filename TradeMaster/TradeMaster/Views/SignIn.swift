@@ -87,6 +87,7 @@ struct SignIn: View {
                     
                     Button(action: {
                         // Action when the "Sign In with Phone Number" is clicked
+                        navigateToNumber()
                     }) {
                         Text("Sign In with Phone Number")
                             .font(Font.custom("Roboto", size: 14))
@@ -242,6 +243,24 @@ struct SignIn: View {
         }
     }
 
+    func navigateToNumber() {
+        // Create an instance of the next view
+        let SignInNumberViewPage = SignInNumber().environmentObject(themeManager)
+
+        // Present the next view using NavigationView
+        let nextView = NavigationView {
+            SignInNumberViewPage
+        }
+
+        // Get the relevant window scene
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            if let window = windowScene.windows.first {
+                // Present the navigation view
+                window.rootViewController = UIHostingController(rootView: nextView)
+                window.makeKeyAndVisible()
+            }
+        }
+    }
 }
 
 #if DEBUG

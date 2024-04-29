@@ -1,21 +1,16 @@
 //
-//  SignUp.swift
+//  SignInNumber.swift
 //  TradeMaster
 //
-//  Created by Aishwarya Girish Mensinkai on 4/27/24.
+//  Created by Aishwarya Girish Mensinkai on 4/28/24.
 //
 
 import SwiftUI
 
-struct SignUp: View {
+struct SignInNumber: View {
     @EnvironmentObject var themeManager: ThemeManager // Inject the theme manager
     @State private var email: String = ""
     @State private var password: String = ""
-    @State private var isChecked: Bool = false
-    
-    func toggleCheckbox() {
-        isChecked.toggle() // Toggle the checkbox state
-    }
 
     var body: some View {
         VStack {
@@ -34,26 +29,9 @@ struct SignUp: View {
                 
                 HStack(alignment: .top, spacing: 0) {
                     Button(action: {
-                        // Action for Sign Up button
-                    }) {
-                        Text("Sign In")
-                            .font(Font.custom("Roboto", size: 16).weight(.medium))
-                            .tracking(0.15)
-                            .lineSpacing(20)
-                            .foregroundColor(Color(red: 0.07, green: 0.07, blue: 0.07))
-                    }
-                    .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
-                    .frame(minWidth: 150, idealWidth: 200, maxWidth: .infinity, minHeight: 36, maxHeight: 36)
-                    .background(Color(red: 0.80, green: 0.84, blue: 0.91))
-                    .cornerRadius(2)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 2)
-                            .stroke(Color(red: 0.80, green: 0.84, blue: 0.91), lineWidth: 0.50)
-                    )
-                    Button(action: {
                         // Action for Sign In button
                     }) {
-                        Text("Sign Up")
+                        Text("Sign In")
                             .font(Font.custom("Roboto", size: 16).weight(.medium))
                             .tracking(0.15)
                             .lineSpacing(20)
@@ -67,12 +45,30 @@ struct SignUp: View {
                         RoundedRectangle(cornerRadius: 2)
                             .stroke(Color(red: 0.07, green: 0.32, blue: 0.45), lineWidth: 0.50)
                     )
+                    
+                    Button(action: {
+                        // Action for Sign Up button
+                    }) {
+                        Text("Sign Up")
+                            .font(Font.custom("Roboto", size: 16).weight(.medium))
+                            .tracking(0.15)
+                            .lineSpacing(20)
+                            .foregroundColor(Color(red: 0.07, green: 0.07, blue: 0.07))
+                    }
+                    .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
+                    .frame(minWidth: 150, idealWidth: 200, maxWidth: .infinity, minHeight: 36, maxHeight: 36)
+                    .background(Color(red: 0.80, green: 0.84, blue: 0.91))
+                    .cornerRadius(2)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 2)
+                            .stroke(Color(red: 0.80, green: 0.84, blue: 0.91), lineWidth: 0.50)
+                    )
                 }
                 .frame(width: 366, height: 44)
                 .background(Color(red: 0.96, green: 0.97, blue: 0.99))
                 .cornerRadius(4)
                 
-              Text("Sign Up")
+              Text("Sign In")
                 .font(Font.custom("Roboto", size: 24).weight(.medium))
                 .lineSpacing(32)
                 .foregroundColor(Color(red: 0.07, green: 0.07, blue: 0.07))
@@ -80,8 +76,8 @@ struct SignUp: View {
                 .background(themeManager.currentTheme.sunBackgroundColor) // Use sun background color for demonstration
                 
               VStack(alignment: .leading, spacing: 4) {
-                HStack(alignment: .top, spacing: 135) {
-                  Text("Email")
+                HStack(alignment: .top, spacing: 150) {
+                  Text("Mobile Number")
                     .font(Font.custom("Roboto", size: 12))
                     .tracking(0.40)
                     .lineSpacing(16)
@@ -90,10 +86,10 @@ struct SignUp: View {
                     .background(themeManager.currentTheme.sunBackgroundColor) // Use sun background color for demonstration
                     
                     Button(action: {
-                        // Action when the "Sign In with Phone Number" is clicked
-                        navigateToNumber()
+                        // Action when the "Sign In with Email" is clicked
+                        navigateToEmail()
                     }) {
-                        Text("Sign Up with Phone Number")
+                        Text("Sign In with Email")
                             .font(Font.custom("Roboto", size: 14))
                             .tracking(0.40)
                             .lineSpacing(16)
@@ -102,7 +98,7 @@ struct SignUp: View {
                     .buttonStyle(PlainButtonStyle()) // Use PlainButtonStyle to remove default button styling
                 }
                   
-                TextField("Enter your email", text: $email)
+                TextField("Enter your number", text: $email)
                       .font(Font.custom("Roboto", size: 16))
                       .padding(EdgeInsets(top: 10, leading: 16, bottom: 10, trailing: 16))
                       .frame(width: 358)
@@ -135,27 +131,16 @@ struct SignUp: View {
                       )
 
                   Spacer()
-                  
-                  HStack(spacing: 0) {
-                      Button(action: {
-                          // Action to toggle the checkbox state
-                          toggleCheckbox()
-                      }) {
-                          Image(systemName: isChecked ? "checkmark.square.fill" : "square")
-                              .resizable()
-                              .aspectRatio(contentMode: .fit)
-                              .frame(width: 18, height: 18)
-                              .foregroundColor(Color(red: 0.07, green: 0.07, blue: 0.07))
-                      }
-                      .padding(EdgeInsets(top: 7, leading: 0, bottom: 7, trailing: 7))
-                      
-                      Text("I agree to the terms & policy")
-                          .font(Font.custom("Roboto", size: 14))
-                          .tracking(0.25)
-                          .lineSpacing(20)
-                          .foregroundColor(Color(red: 0.07, green: 0.07, blue: 0.07))
+                  Button(action: {
+                      // Action when the "Forgot Password?" is clicked
+                  }) {
+                      Text("Forgot Password?")
+                          .font(Font.custom("Roboto", size: 12))
+                          .tracking(0.40)
+                          .lineSpacing(16)
+                          .foregroundColor(Color(red: 0.07, green: 0.32, blue: 0.45))
                   }
-
+                  .buttonStyle(PlainButtonStyle()) // Use PlainButtonStyle to remove default button styling
 
               }
                 
@@ -163,7 +148,7 @@ struct SignUp: View {
                     // Action to perform when the button is tapped
                 }) {
                     HStack(spacing: 8) {
-                        Text("Sign Up")
+                        Text("Sign In")
                             .font(Font.custom("Roboto", size: 20).weight(.medium))
                             .tracking(0.10)
                             .lineSpacing(24)
@@ -258,13 +243,13 @@ struct SignUp: View {
         }
     }
 
-    func navigateToNumber() {
+    func navigateToEmail() {
         // Create an instance of the next view
-        let SignUpNumberViewPage = SignUpNumber().environmentObject(themeManager)
+        let SignInViewPage = SignIn().environmentObject(themeManager)
 
         // Present the next view using NavigationView
         let nextView = NavigationView {
-            SignUpNumberViewPage
+            SignInViewPage
         }
 
         // Get the relevant window scene
@@ -276,13 +261,13 @@ struct SignUp: View {
             }
         }
     }
-
 }
 
+
 #if DEBUG
-struct SignUp_Previews: PreviewProvider {
+struct SignInNumber_Previews: PreviewProvider {
     static var previews: some View {
-        SignUp().environmentObject(ThemeManager()) // Provide the theme manager
+        SignInNumber().environmentObject(ThemeManager()) // Provide the theme manager
     }
 }
 #endif
