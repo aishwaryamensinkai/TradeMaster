@@ -1,0 +1,427 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1B54A9E92BBFA78D00801A6B /* TradeMasterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B54A9E82BBFA78D00801A6B /* TradeMasterApp.swift */; };
+		1B54A9EB2BBFA78D00801A6B /* ThemePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B54A9EA2BBFA78D00801A6B /* ThemePageView.swift */; };
+		1B54A9ED2BBFA78D00801A6B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B54A9EC2BBFA78D00801A6B /* Item.swift */; };
+		1B54A9EF2BBFA78F00801A6B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B54A9EE2BBFA78F00801A6B /* Assets.xcassets */; };
+		1B54A9F22BBFA78F00801A6B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B54A9F12BBFA78F00801A6B /* Preview Assets.xcassets */; };
+		1B8E58DA2BD97F74009DB97A /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8E58D92BD97F74009DB97A /* SplashScreenView.swift */; };
+		1B8E58DC2BD99BE8009DB97A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1B8E58DB2BD99BE8009DB97A /* README.md */; };
+		1B8E58DE2BD9EE9B009DB97A /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8E58DD2BD9EE9B009DB97A /* Theme.swift */; };
+		1B8E58E02BDAA5D8009DB97A /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8E58DF2BDAA5D8009DB97A /* ThemeManager.swift */; };
+		1B8E58E22BDAAF54009DB97A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8E58E12BDAAF54009DB97A /* Constants.swift */; };
+		1B8E58E42BDAF016009DB97A /* Onboarding1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8E58E32BDAF016009DB97A /* Onboarding1.swift */; };
+		1B8E58E62BDB35BE009DB97A /* Onboarding2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8E58E52BDB35BE009DB97A /* Onboarding2.swift */; };
+		1B8E58E82BDB3A68009DB97A /* Onboarding3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8E58E72BDB3A68009DB97A /* Onboarding3.swift */; };
+		1B8E58EA2BDB4061009DB97A /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8E58E92BDB4061009DB97A /* RegistrationView.swift */; };
+		1B8E58EC2BDD7425009DB97A /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8E58EB2BDD7424009DB97A /* SignIn.swift */; };
+		1B8E58EE2BDD7434009DB97A /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8E58ED2BDD7434009DB97A /* SignUp.swift */; };
+		1B8E58F02BDEC90C009DB97A /* SignInNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8E58EF2BDEC90C009DB97A /* SignInNumber.swift */; };
+		1B8E58F22BDEC948009DB97A /* SignUpNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8E58F12BDEC948009DB97A /* SignUpNumber.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1B54A9E52BBFA78D00801A6B /* TradeMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TradeMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1B54A9E82BBFA78D00801A6B /* TradeMasterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradeMasterApp.swift; sourceTree = "<group>"; };
+		1B54A9EA2BBFA78D00801A6B /* ThemePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePageView.swift; sourceTree = "<group>"; };
+		1B54A9EC2BBFA78D00801A6B /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		1B54A9EE2BBFA78F00801A6B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1B54A9F12BBFA78F00801A6B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		1B8E58D92BD97F74009DB97A /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
+		1B8E58DB2BD99BE8009DB97A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		1B8E58DD2BD9EE9B009DB97A /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		1B8E58DF2BDAA5D8009DB97A /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		1B8E58E12BDAAF54009DB97A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		1B8E58E32BDAF016009DB97A /* Onboarding1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding1.swift; sourceTree = "<group>"; };
+		1B8E58E52BDB35BE009DB97A /* Onboarding2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding2.swift; sourceTree = "<group>"; };
+		1B8E58E72BDB3A68009DB97A /* Onboarding3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding3.swift; sourceTree = "<group>"; };
+		1B8E58E92BDB4061009DB97A /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
+		1B8E58EB2BDD7424009DB97A /* SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
+		1B8E58ED2BDD7434009DB97A /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
+		1B8E58EF2BDEC90C009DB97A /* SignInNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInNumber.swift; sourceTree = "<group>"; };
+		1B8E58F12BDEC948009DB97A /* SignUpNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNumber.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1B54A9E22BBFA78D00801A6B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1B54A9DC2BBFA78D00801A6B = {
+			isa = PBXGroup;
+			children = (
+				1B8E58DB2BD99BE8009DB97A /* README.md */,
+				1B54A9E72BBFA78D00801A6B /* TradeMaster */,
+				1B54A9E62BBFA78D00801A6B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1B54A9E62BBFA78D00801A6B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1B54A9E52BBFA78D00801A6B /* TradeMaster.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1B54A9E72BBFA78D00801A6B /* TradeMaster */ = {
+			isa = PBXGroup;
+			children = (
+				1B8E58D82BD978A4009DB97A /* ModelView */,
+				1B54A9F92BBFA7E900801A6B /* Models */,
+				1B54A9F82BBFA7A000801A6B /* Views */,
+				1B54A9E82BBFA78D00801A6B /* TradeMasterApp.swift */,
+				1B54A9EC2BBFA78D00801A6B /* Item.swift */,
+				1B54A9EE2BBFA78F00801A6B /* Assets.xcassets */,
+				1B54A9F02BBFA78F00801A6B /* Preview Content */,
+			);
+			path = TradeMaster;
+			sourceTree = "<group>";
+		};
+		1B54A9F02BBFA78F00801A6B /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				1B54A9F12BBFA78F00801A6B /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		1B54A9F82BBFA7A000801A6B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1B54A9EA2BBFA78D00801A6B /* ThemePageView.swift */,
+				1B8E58D92BD97F74009DB97A /* SplashScreenView.swift */,
+				1B8E58E32BDAF016009DB97A /* Onboarding1.swift */,
+				1B8E58E52BDB35BE009DB97A /* Onboarding2.swift */,
+				1B8E58E72BDB3A68009DB97A /* Onboarding3.swift */,
+				1B8E58E92BDB4061009DB97A /* RegistrationView.swift */,
+				1B8E58EB2BDD7424009DB97A /* SignIn.swift */,
+				1B8E58ED2BDD7434009DB97A /* SignUp.swift */,
+				1B8E58EF2BDEC90C009DB97A /* SignInNumber.swift */,
+				1B8E58F12BDEC948009DB97A /* SignUpNumber.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1B54A9F92BBFA7E900801A6B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1B8E58DD2BD9EE9B009DB97A /* Theme.swift */,
+				1B8E58E12BDAAF54009DB97A /* Constants.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1B8E58D82BD978A4009DB97A /* ModelView */ = {
+			isa = PBXGroup;
+			children = (
+				1B8E58DF2BDAA5D8009DB97A /* ThemeManager.swift */,
+			);
+			name = ModelView;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1B54A9E42BBFA78D00801A6B /* TradeMaster */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1B54A9F52BBFA78F00801A6B /* Build configuration list for PBXNativeTarget "TradeMaster" */;
+			buildPhases = (
+				1B54A9E12BBFA78D00801A6B /* Sources */,
+				1B54A9E22BBFA78D00801A6B /* Frameworks */,
+				1B54A9E32BBFA78D00801A6B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TradeMaster;
+			productName = TradeMaster;
+			productReference = 1B54A9E52BBFA78D00801A6B /* TradeMaster.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1B54A9DD2BBFA78D00801A6B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1520;
+				LastUpgradeCheck = 1520;
+				TargetAttributes = {
+					1B54A9E42BBFA78D00801A6B = {
+						CreatedOnToolsVersion = 15.2;
+					};
+				};
+			};
+			buildConfigurationList = 1B54A9E02BBFA78D00801A6B /* Build configuration list for PBXProject "TradeMaster" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1B54A9DC2BBFA78D00801A6B;
+			productRefGroup = 1B54A9E62BBFA78D00801A6B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1B54A9E42BBFA78D00801A6B /* TradeMaster */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1B54A9E32BBFA78D00801A6B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1B8E58DC2BD99BE8009DB97A /* README.md in Resources */,
+				1B54A9F22BBFA78F00801A6B /* Preview Assets.xcassets in Resources */,
+				1B54A9EF2BBFA78F00801A6B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1B54A9E12BBFA78D00801A6B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1B8E58EA2BDB4061009DB97A /* RegistrationView.swift in Sources */,
+				1B8E58F22BDEC948009DB97A /* SignUpNumber.swift in Sources */,
+				1B8E58E62BDB35BE009DB97A /* Onboarding2.swift in Sources */,
+				1B8E58E42BDAF016009DB97A /* Onboarding1.swift in Sources */,
+				1B8E58E82BDB3A68009DB97A /* Onboarding3.swift in Sources */,
+				1B54A9EB2BBFA78D00801A6B /* ThemePageView.swift in Sources */,
+				1B54A9ED2BBFA78D00801A6B /* Item.swift in Sources */,
+				1B8E58F02BDEC90C009DB97A /* SignInNumber.swift in Sources */,
+				1B8E58DE2BD9EE9B009DB97A /* Theme.swift in Sources */,
+				1B8E58EC2BDD7425009DB97A /* SignIn.swift in Sources */,
+				1B54A9E92BBFA78D00801A6B /* TradeMasterApp.swift in Sources */,
+				1B8E58E22BDAAF54009DB97A /* Constants.swift in Sources */,
+				1B8E58DA2BD97F74009DB97A /* SplashScreenView.swift in Sources */,
+				1B8E58EE2BDD7434009DB97A /* SignUp.swift in Sources */,
+				1B8E58E02BDAA5D8009DB97A /* ThemeManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1B54A9F32BBFA78F00801A6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		1B54A9F42BBFA78F00801A6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1B54A9F62BBFA78F00801A6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"TradeMaster/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.syr.amensink.TradeMaster;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1B54A9F72BBFA78F00801A6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"TradeMaster/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.syr.amensink.TradeMaster;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1B54A9E02BBFA78D00801A6B /* Build configuration list for PBXProject "TradeMaster" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1B54A9F32BBFA78F00801A6B /* Debug */,
+				1B54A9F42BBFA78F00801A6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1B54A9F52BBFA78F00801A6B /* Build configuration list for PBXNativeTarget "TradeMaster" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1B54A9F62BBFA78F00801A6B /* Debug */,
+				1B54A9F72BBFA78F00801A6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1B54A9DD2BBFA78D00801A6B /* Project object */;
+}
