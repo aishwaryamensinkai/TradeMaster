@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct SignIn: View {
     @EnvironmentObject var themeManager: ThemeManager // Inject the theme manager
@@ -124,6 +125,7 @@ struct SignIn: View {
                 
                 Button(action: {
                     // Action to perform when the button is tapped
+                    viewModel.signInWithEmail()
                 }) {
                     HStack(spacing: 8) {
                         Text("Sign In")

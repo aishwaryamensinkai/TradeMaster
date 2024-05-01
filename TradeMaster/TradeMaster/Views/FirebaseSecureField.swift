@@ -30,12 +30,12 @@ struct FirebaseSecureField: View {
             SecureField("Enter your password", text: $text)
                 .font(Font.custom("Roboto", size: 16))
                 .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 48)) // Adjusted padding
-                .frame(width: 358)
+                //.frame(width: 358) // Remove fixed width constraint
                 .background(Color(red: 0.98, green: 0.99, blue: 1))
                 .cornerRadius(4)
                 .overlay(
-                  RoundedRectangle(cornerRadius: 4)
-                      .stroke(Color(red: 0.80, green: 0.84, blue: 0.91), lineWidth: 0.50)
+                    RoundedRectangle(cornerRadius: 4)
+                        .stroke(Color(red: 0.80, green: 0.84, blue: 0.91), lineWidth: 0.50)
                 )
                 .autocorrectionDisabled()
                 .textInputAutocapitalization(.never)
@@ -48,8 +48,10 @@ struct FirebaseSecureField: View {
                             .contentTransition(.symbolEffect)
                     }
                 }
-        }    }
+        }
+    }
 }
+
 
 #Preview {
     FirebaseSecureField(placeHolder: "Password", text: .constant(""), showPassword: .constant(true))

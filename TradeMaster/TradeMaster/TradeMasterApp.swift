@@ -6,13 +6,33 @@
 //
 
 import SwiftUI
-import SwiftData
+import Firebase
+import UIKit
+
+// Ensure that AppDelegate conforms to the UIApplicationDelegate protocol
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        FirebaseApp.configure()
+        return true
+    }
+}
 
 @main
 struct TradeMasterApp: App {
-    let themeManager = ThemeManager() // Initialize ThemeManager
+    // Initialize ThemeManager
+    let themeManager = ThemeManager()
+    
+    init(){
+        FirebaseApp.configure()
+        print("Firebase configured")
+    }
+    
     var body: some Scene {
         WindowGroup {
-            SplashScreenView().environmentObject(themeManager) // Provide the theme manager
-        }    }
+            // Pass the themeManager as an environment object to SplashScreenView
+            SplashScreenView()
+                .environmentObject(themeManager)
+        }
+    }
 }
