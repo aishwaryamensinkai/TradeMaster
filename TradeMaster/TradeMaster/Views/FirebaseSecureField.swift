@@ -13,24 +13,21 @@ struct FirebaseSecureField: View {
     @Binding var showPassword: Bool
     
     var body: some View {
-        if (showPassword){
+        if (showPassword) {
             FirebaseTextField(placeHolder: "Enter your password", text: $text)
-                .overlay(alignment: .trailing){
-                    Button(role:.cancel){
+                .overlay(alignment: .trailing) {
+                    Button(action: {
                         showPassword = false
-                    } label: {
+                    }) {
                         Image(systemName: "eye")
                             .padding()
                             .contentTransition(.symbolEffect)
                     }
                 }
-        }
-        else
-        {
+        } else {
             SecureField("Enter your password", text: $text)
                 .font(Font.custom("Roboto", size: 16))
-                .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 48)) // Adjusted padding
-                //.frame(width: 358) // Remove fixed width constraint
+                .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)) // Adjusted padding
                 .background(Color(red: 0.98, green: 0.99, blue: 1))
                 .cornerRadius(4)
                 .overlay(
@@ -39,10 +36,10 @@ struct FirebaseSecureField: View {
                 )
                 .autocorrectionDisabled()
                 .textInputAutocapitalization(.never)
-                .overlay(alignment: .trailing){
-                    Button(role:.cancel){
+                .overlay(alignment: .trailing) {
+                    Button(action: {
                         showPassword = true
-                    } label: {
+                    }) {
                         Image(systemName: "eye.slash")
                             .padding()
                             .contentTransition(.symbolEffect)

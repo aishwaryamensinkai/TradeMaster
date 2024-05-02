@@ -12,6 +12,7 @@ struct SignIn: View {
     @EnvironmentObject var themeManager: ThemeManager // Inject the theme manager
     @State var viewModel = SignInModel()
 
+
     var body: some View {
         VStack {
             VStack(alignment: .leading, spacing: 50) {
@@ -125,7 +126,8 @@ struct SignIn: View {
                 
                 Button(action: {
                     // Action to perform when the button is tapped
-                    viewModel.signInWithEmail()
+//                    viewModel.signInWithEmail()
+                    SignInemail()
                 }) {
                     HStack(spacing: 8) {
                         Text("Sign In")
@@ -143,10 +145,9 @@ struct SignIn: View {
                 
                 HStack(spacing: 16) {
                   VStack(alignment: .leading, spacing: 8) {
-                    Rectangle()
-                      .foregroundColor(.clear)
+                    RoundedRectangle(cornerRadius: 2)
+                      .fill(Color(red: 0.80, green: 0.84, blue: 0.91))
                       .frame(width: 155.50, height: 2)
-                      .background(Color(red: 0.80, green: 0.84, blue: 0.91))
                   }
                   .padding(EdgeInsets(top: 3, leading: 0, bottom: 3, trailing: 0))
                   .frame(maxWidth: .infinity)
@@ -156,10 +157,9 @@ struct SignIn: View {
                     .lineSpacing(20)
                     .foregroundColor(Color(red: 0.83, green: 0.83, blue: 0.83))
                   VStack(alignment: .leading, spacing: 8) {
-                    Rectangle()
-                      .foregroundColor(.clear)
+                    RoundedRectangle(cornerRadius: 2)
+                      .fill(Color(red: 0.80, green: 0.84, blue: 0.91))
                       .frame(width: 155.50, height: 2)
-                      .background(Color(red: 0.80, green: 0.84, blue: 0.91))
                   }
                   .padding(EdgeInsets(top: 3, leading: 0, bottom: 3, trailing: 0))
                   .frame(maxWidth: .infinity)
@@ -192,16 +192,42 @@ struct SignIn: View {
                 .frame(width: 358, height: 40)
                 .background(Color(red: 0.96, green: 0.97, blue: 0.99))
                 .cornerRadius(4)
-
-
             }
             .frame(width: 358, height: 220)
+                   
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(themeManager.currentTheme.sunBackgroundColor) // Apply background color
         .foregroundColor(themeManager.currentTheme.sunTextColor) // Use sun text color
         .background(Color.white)
         .ignoresSafeArea()
+
+    }
+    
+    func SignInemail(){
+        // Call your sign-in function from the view model
+        viewModel.signInWithEmail() // Removed trailing closure
+        
+        // Check if user is logged in
+        Auth.auth().addStateDidChangeListener { auth, user in
+            if user != nil {
+                // If sign-in is successful, navigate to the next page
+                let welcome = Welcome().environmentObject(themeManager)
+                let nextView = NavigationView {
+                    welcome
+                }
+                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                    if let window = windowScene.windows.first {
+                        window.rootViewController = UIHostingController(rootView: nextView)
+                        window.makeKeyAndVisible()
+                    }
+                }
+            } else {
+                // Handle sign-in failure if needed
+                print("Sign-in failed")
+                navigateToSignIn()
+            }
+        }
     }
 
     func navigateToSignIn() {

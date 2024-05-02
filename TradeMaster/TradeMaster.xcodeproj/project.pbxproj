@@ -12,6 +12,8 @@
 		1B54A9ED2BBFA78D00801A6B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B54A9EC2BBFA78D00801A6B /* Item.swift */; };
 		1B54A9EF2BBFA78F00801A6B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B54A9EE2BBFA78F00801A6B /* Assets.xcassets */; };
 		1B54A9F22BBFA78F00801A6B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B54A9F12BBFA78F00801A6B /* Preview Assets.xcassets */; };
+		1B5D326C2BE31DC800E5CF62 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5D326B2BE31DC800E5CF62 /* StringExt.swift */; };
+		1B5D326E2BE3211A00E5CF62 /* Welcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5D326D2BE3211A00E5CF62 /* Welcome.swift */; };
 		1B8E58DA2BD97F74009DB97A /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8E58D92BD97F74009DB97A /* SplashScreenView.swift */; };
 		1B8E58DC2BD99BE8009DB97A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1B8E58DB2BD99BE8009DB97A /* README.md */; };
 		1B8E58DE2BD9EE9B009DB97A /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8E58DD2BD9EE9B009DB97A /* Theme.swift */; };
@@ -45,6 +47,8 @@
 		1B54A9EC2BBFA78D00801A6B /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		1B54A9EE2BBFA78F00801A6B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1B54A9F12BBFA78F00801A6B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		1B5D326B2BE31DC800E5CF62 /* StringExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExt.swift; sourceTree = "<group>"; };
+		1B5D326D2BE3211A00E5CF62 /* Welcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Welcome.swift; sourceTree = "<group>"; };
 		1B8E58D92BD97F74009DB97A /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		1B8E58DB2BD99BE8009DB97A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1B8E58DD2BD9EE9B009DB97A /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
@@ -104,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				1B8E58F92BE16EEA009DB97A /* GoogleService-Info.plist */,
+				1B5D326A2BE31D9C00E5CF62 /* Utils */,
 				1B8E590B2BE1D4AE009DB97A /* Services */,
 				1B8E58D82BD978A4009DB97A /* ModelView */,
 				1B54A9F92BBFA7E900801A6B /* Models */,
@@ -139,6 +144,7 @@
 				1B8E58F12BDEC948009DB97A /* SignUpNumber.swift */,
 				1B8E58F52BE06688009DB97A /* FirebaseSecureField.swift */,
 				1B8E58F72BE066D8009DB97A /* FirebaseTextField.swift */,
+				1B5D326D2BE3211A00E5CF62 /* Welcome.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -150,6 +156,14 @@
 				1B8E58E12BDAAF54009DB97A /* Constants.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		1B5D326A2BE31D9C00E5CF62 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				1B5D326B2BE31DC800E5CF62 /* StringExt.swift */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 		1B8E58D82BD978A4009DB97A /* ModelView */ = {
@@ -272,7 +286,9 @@
 				1B8E58F02BDEC90C009DB97A /* SignInNumber.swift in Sources */,
 				1B8E58F82BE066D8009DB97A /* FirebaseTextField.swift in Sources */,
 				1B8E58DE2BD9EE9B009DB97A /* Theme.swift in Sources */,
+				1B5D326E2BE3211A00E5CF62 /* Welcome.swift in Sources */,
 				1B8E58EC2BDD7425009DB97A /* SignIn.swift in Sources */,
+				1B5D326C2BE31DC800E5CF62 /* StringExt.swift in Sources */,
 				1B54A9E92BBFA78D00801A6B /* TradeMasterApp.swift in Sources */,
 				1B8E58E22BDAAF54009DB97A /* Constants.swift in Sources */,
 				1B8E58DA2BD97F74009DB97A /* SplashScreenView.swift in Sources */,

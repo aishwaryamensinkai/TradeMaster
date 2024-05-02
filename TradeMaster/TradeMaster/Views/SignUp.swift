@@ -9,9 +9,9 @@ import SwiftUI
 
 struct SignUp: View {
     @EnvironmentObject var themeManager: ThemeManager // Inject the theme manager
-    @State private var email: String = ""
-    @State private var password: String = ""
     @State private var isChecked: Bool = false
+    @State var viewModel = SignInModel()
+
     
     func toggleCheckbox() {
         isChecked.toggle() // Toggle the checkbox state
@@ -99,16 +99,7 @@ struct SignUp: View {
                     .buttonStyle(PlainButtonStyle()) // Use PlainButtonStyle to remove default button styling
                 }
                   
-                TextField("Enter your email", text: $email)
-                      .font(Font.custom("Roboto", size: 16))
-                      .padding(EdgeInsets(top: 10, leading: 16, bottom: 10, trailing: 16))
-                      .frame(width: 358)
-                      .background(Color(red: 0.98, green: 0.99, blue: 1))
-                      .cornerRadius(4)
-                      .overlay(
-                          RoundedRectangle(cornerRadius: 4)
-                              .stroke(Color(red: 0.80, green: 0.84, blue: 0.91), lineWidth: 0.50)
-                      )
+                  FirebaseTextField(placeHolder: "Enter your email", text: $viewModel.email)
 
               }
               VStack(alignment: .leading, spacing: 4) {
@@ -119,16 +110,8 @@ struct SignUp: View {
                   .foregroundColor(themeManager.currentTheme.sunTextColor) // Use sun text color for demonstration
                   .background(themeManager.currentTheme.sunBackgroundColor) // Use sun background color for demonstration
                   
-//                  SecureField("Enter your password", text: $password)
-//                      .font(Font.custom("Roboto", size: 16))
-//                      .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 48)) // Adjusted padding
-//                      .frame(width: 358)
-//                      .background(Color(red: 0.98, green: 0.99, blue: 1))
-//                      .cornerRadius(4)
-//                      .overlay(
-//                          RoundedRectangle(cornerRadius: 4)
-//                              .stroke(Color(red: 0.80, green: 0.84, blue: 0.91), lineWidth: 0.50)
-//                      )
+                  //password
+                  FirebaseSecureField(placeHolder: "Enter your password", text: $viewModel.password, showPassword: $viewModel.showPassword)
 
                   Spacer()
                   
@@ -159,6 +142,7 @@ struct SignUp: View {
                 
                 Button(action: {
                     // Action to perform when the button is tapped
+                    registeruserWithEmail()
                 }) {
                     HStack(spacing: 8) {
                         Text("Sign Up")
@@ -235,6 +219,10 @@ struct SignUp: View {
         .foregroundColor(themeManager.currentTheme.sunTextColor) // Use sun text color
         .background(Color.white)
         .ignoresSafeArea()
+    }
+    
+    func registeruserWithEmail(){
+        viewModel.registerWithEmail()
     }
     
     func navigateToSignIn() {
