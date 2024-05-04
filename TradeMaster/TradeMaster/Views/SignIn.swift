@@ -7,17 +7,22 @@
 
 import SwiftUI
 import FirebaseAuth
+import GoogleSignIn
+import GoogleSignInSwift
 
 struct SignIn: View {
     @EnvironmentObject var themeManager: ThemeManager // Inject the theme manager
-    @State var viewModel = SignInModel()
-
+    @StateObject private var viewModel = SignInEmailViewModel()
+    var message : String = ""
+    @State private var showAlert = false // State variable to control the presentation of the alert
+    @State private var alertMessage = "" // State variable to hold the message for the alert
+    @StateObject private var googleModel = GoogleSignIn()
 
     var body: some View {
         VStack {
             VStack(alignment: .leading, spacing: 50) {
                 Button(action: {
-                    navigateBack()
+                    navigateBack(themeManager: themeManager)
                 }) {
                     Image(systemName: "arrow.left")
                         .font(Font.custom("Roboto", size: 20).weight(.medium))
@@ -32,7 +37,7 @@ struct SignIn: View {
                 HStack(spacing: 0) {
                     Button(action: {
                         // Action for Sign In button
-                        navigateToSignIn()
+                        navigateToSignIn(themeManager: themeManager)
                     }) {
                         Text("Sign In")
                             .font(Font.custom("Roboto", size: 16).weight(.medium))
@@ -51,7 +56,7 @@ struct SignIn: View {
                     
                     Button(action: {
                         // Action for Sign Up button
-                        navigateToSignUp()
+                        navigateToSignUp(themeManager: themeManager)
                     }) {
                         Text("Sign Up")
                             .font(Font.custom("Roboto", size: 16).weight(.medium))
@@ -86,7 +91,7 @@ struct SignIn: View {
                     
                     Button(action: {
                         // Action when the "Sign In with Phone Number" is clicked
-                        navigateToNumber()
+                        navigateToSignInNumber(themeManager: themeManager)
                     }) {
                         Text("Sign In with Phone Number")
                             .font(Font.custom("Roboto", size: 14))
@@ -125,9 +130,24 @@ struct SignIn: View {
               }
                 
                 Button(action: {
-                    // Action to perform when the button is tapped
-//                    viewModel.signInWithEmail()
-                    SignInemail()
+                    // Check if email is valid and password length is at least 6 characters
+                    guard isValidEmail(viewModel.email) else {
+                        TradeMaster.showAlert(message: "Please enter a valid email address.")
+                        return
+                    }
+                                   
+                    guard viewModel.password.count >= 6 else {
+                        TradeMaster.showAlert(message: "Password must be at least 6 characters long.")
+                        return
+                    }
+                    // Check if email or password is empty
+                    guard !viewModel.email.isEmpty && !viewModel.password.isEmpty else {
+                        TradeMaster.showAlert(message: "Please provide both email and password to sign in.")
+                        return
+                    }
+                    
+                    // Login the user if email and password are provided
+                    viewModel.signinUserWithEmail(themeManager: themeManager)
                 }) {
                     HStack(spacing: 8) {
                         Text("Sign In")
@@ -166,6 +186,17 @@ struct SignIn: View {
                 }
                 .frame(width: 358, height: 20)
                 
+                GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: .dark, style: .wide, state: .normal)){
+                    
+                    Task{
+                        do{
+                            try await googleModel.signInGoogle()
+                            navigateToMainPage(themeManager: themeManager)
+                        } catch{
+                            print(error)
+                        }
+                    }
+                }
                 
                 Button(action: {
                     // Action to perform when the button is tapped
@@ -202,108 +233,6 @@ struct SignIn: View {
         .background(Color.white)
         .ignoresSafeArea()
 
-    }
-    
-    func SignInemail(){
-        // Call your sign-in function from the view model
-        viewModel.signInWithEmail() // Removed trailing closure
-        
-        // Check if user is logged in
-        Auth.auth().addStateDidChangeListener { auth, user in
-            if user != nil {
-                // If sign-in is successful, navigate to the next page
-                let welcome = Welcome().environmentObject(themeManager)
-                let nextView = NavigationView {
-                    welcome
-                }
-                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-                    if let window = windowScene.windows.first {
-                        window.rootViewController = UIHostingController(rootView: nextView)
-                        window.makeKeyAndVisible()
-                    }
-                }
-            } else {
-                // Handle sign-in failure if needed
-                print("Sign-in failed")
-                navigateToSignIn()
-            }
-        }
-    }
-
-    func navigateToSignIn() {
-        // Create an instance of the next view
-        let SignInPage = SignIn().environmentObject(themeManager)
-
-        // Present the next view using NavigationView
-        let nextView = NavigationView {
-            SignInPage
-        }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
-        }
-    }
-    
-    func navigateToSignUp() {
-        // Create an instance of the next view
-        let SignUpPage = SignUp().environmentObject(themeManager)
-
-        // Present the next view using NavigationView
-        let nextView = NavigationView {
-            SignUpPage
-        }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
-        }
-    }
-    
-    func navigateBack() {
-        // Create an instance of the next view
-        let RegistrationViewPage = RegistrationView().environmentObject(themeManager)
-
-        // Present the next view using NavigationView
-        let nextView = NavigationView {
-            RegistrationViewPage
-        }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
-        }
-    }
-
-    func navigateToNumber() {
-        // Create an instance of the next view
-        let SignInNumberViewPage = SignInNumber().environmentObject(themeManager)
-
-        // Present the next view using NavigationView
-        let nextView = NavigationView {
-            SignInNumberViewPage
-        }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
-        }
     }
 }
 

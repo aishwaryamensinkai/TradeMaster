@@ -7,7 +7,9 @@
 
 import SwiftUI
 
-struct FirebaseTextField: View {
+struct FirebaseTextField: View {    
+    @EnvironmentObject var themeManager: ThemeManager // Inject the theme manager
+
     var placeHolder: String
     @Binding var text: String
     
@@ -16,7 +18,6 @@ struct FirebaseTextField: View {
             .font(Font.custom("Roboto", size: 16))
             .padding(EdgeInsets(top: 10, leading: 16, bottom: 10, trailing: 16))
 //            .frame(width: 358)
-            .background(Color(red: 0.98, green: 0.99, blue: 1))
             .cornerRadius(4)
             .overlay(
                 RoundedRectangle(cornerRadius: 4)
@@ -25,10 +26,12 @@ struct FirebaseTextField: View {
             .autocorrectionDisabled()
             .textInputAutocapitalization(.never)
             .frame(maxWidth: .infinity) // Adjust the TextField's width to fill the available space
+            .foregroundColor(themeManager.currentTheme.sunTextColor) // Use sun text color for demonstration
+            .background(themeManager.currentTheme.sunBackgroundColor) // Use sun background color for demonstration
 
     }
 }
 
 #Preview {
-    FirebaseTextField(placeHolder: "placeholder", text: .constant(""))
+    FirebaseTextField(placeHolder: "placeholder", text: .constant("")).environmentObject(ThemeManager()) // Provide the theme manager
 }

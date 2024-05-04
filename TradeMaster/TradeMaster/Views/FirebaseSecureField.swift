@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct FirebaseSecureField: View {
+    @EnvironmentObject var themeManager: ThemeManager // Inject the theme manager
+
     var placeHolder: String
     @Binding var text: String
     @Binding var showPassword: Bool
@@ -28,7 +30,6 @@ struct FirebaseSecureField: View {
             SecureField("Enter your password", text: $text)
                 .font(Font.custom("Roboto", size: 16))
                 .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)) // Adjusted padding
-                .background(Color(red: 0.98, green: 0.99, blue: 1))
                 .cornerRadius(4)
                 .overlay(
                     RoundedRectangle(cornerRadius: 4)
@@ -45,11 +46,13 @@ struct FirebaseSecureField: View {
                             .contentTransition(.symbolEffect)
                     }
                 }
+                .foregroundColor(themeManager.currentTheme.sunTextColor) // Use sun text color for demonstration
+                .background(themeManager.currentTheme.sunBackgroundColor) // Use sun background color for demonstration
         }
     }
 }
 
 
 #Preview {
-    FirebaseSecureField(placeHolder: "Password", text: .constant(""), showPassword: .constant(true))
+    FirebaseSecureField(placeHolder: "Password", text: .constant(""), showPassword: .constant(true)).environmentObject(ThemeManager()) // Provide the theme manager
 }

@@ -10,7 +10,10 @@ import SwiftUI
 struct SignUp: View {
     @EnvironmentObject var themeManager: ThemeManager // Inject the theme manager
     @State private var isChecked: Bool = false
-    @State var viewModel = SignInModel()
+    @StateObject private var viewModel = SignInEmailViewModel()
+    var message : String = ""
+    @State private var showAlert = false // State variable to control the presentation of the alert
+    @State private var alertMessage = "" // State variable to hold the message for the alert
 
     
     func toggleCheckbox() {
@@ -21,7 +24,7 @@ struct SignUp: View {
         VStack {
             VStack(alignment: .leading, spacing: 50) {
                 Button(action: {
-                    navigateBack()
+                    navigateBack(themeManager: themeManager)
                 }) {
                     Image(systemName: "arrow.left")
                         .font(Font.custom("Roboto", size: 20).weight(.medium))
@@ -35,7 +38,7 @@ struct SignUp: View {
                 
                 HStack(spacing: 0) {
                     Button(action: {
-                        navigateToSignIn()
+                        navigateToSignIn(themeManager: themeManager)
                     }) {
                         Text("Sign In")
                             .font(Font.custom("Roboto", size: 16).weight(.medium))
@@ -52,7 +55,7 @@ struct SignUp: View {
                             .stroke(Color(red: 0.80, green: 0.84, blue: 0.91), lineWidth: 0.50)
                     )
                     Button(action: {
-                        navigateToSignUp()
+                        navigateToSignUp(themeManager: themeManager)
                     }) {
                         Text("Sign Up")
                             .font(Font.custom("Roboto", size: 16).weight(.medium))
@@ -87,8 +90,8 @@ struct SignUp: View {
                     .background(themeManager.currentTheme.sunBackgroundColor) // Use sun background color for demonstration
                     
                     Button(action: {
-                        // Action when the "Sign In with Phone Number" is clicked
-                        navigateToNumber()
+                        // Action when the "Sign Up with Phone Number" is clicked
+                        navigateToSignUpNumber(themeManager: themeManager)
                     }) {
                         Text("Sign Up with Phone Number")
                             .font(Font.custom("Roboto", size: 14))
@@ -141,8 +144,31 @@ struct SignUp: View {
               }
                 
                 Button(action: {
-                    // Action to perform when the button is tapped
-                    registeruserWithEmail()
+                    // Check if email is valid and password length is at least 6 characters
+                    guard isValidEmail(viewModel.email) else {
+                        TradeMaster.showAlert(message: "Please enter a valid email address.")
+                        return
+                    }
+                                   
+                    guard viewModel.password.count >= 6 else {
+                        TradeMaster.showAlert(message: "Password must be at least 6 characters long.")
+                        return
+                    }
+                    // Check if email or password is empty
+                    guard !viewModel.email.isEmpty && !viewModel.password.isEmpty else {
+                        TradeMaster.showAlert(message: "Please provide both email and password to sign up.")
+                        return
+                    }
+                    
+                    // Check if the checkbox is checked
+                        guard isChecked else {
+                            // Show alert for not agreeing to terms & policy
+                            TradeMaster.showAlert(message: "Please agree to the terms & policy.")
+                            return
+                        }
+                    
+                    // Register the user if email and password are provided
+                    viewModel.registerUserWithEmail(themeManager: themeManager)
                 }) {
                     HStack(spacing: 8) {
                         Text("Sign Up")
@@ -219,88 +245,8 @@ struct SignUp: View {
         .foregroundColor(themeManager.currentTheme.sunTextColor) // Use sun text color
         .background(Color.white)
         .ignoresSafeArea()
+        
     }
-    
-    func registeruserWithEmail(){
-        viewModel.registerWithEmail()
-    }
-    
-    func navigateToSignIn() {
-        // Create an instance of the next view
-        let SignInPage = SignIn().environmentObject(themeManager)
-
-        // Present the next view using NavigationView
-        let nextView = NavigationView {
-            SignInPage
-        }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
-        }
-    }
-    
-    func navigateToSignUp() {
-        // Create an instance of the next view
-        let SignUpPage = SignUp().environmentObject(themeManager)
-
-        // Present the next view using NavigationView
-        let nextView = NavigationView {
-            SignUpPage
-        }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
-        }
-    }
-
-    func navigateBack() {
-        // Create an instance of the next view
-        let RegistrationViewPage = RegistrationView().environmentObject(themeManager)
-
-        // Present the next view using NavigationView
-        let nextView = NavigationView {
-            RegistrationViewPage
-        }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
-        }
-    }
-
-    func navigateToNumber() {
-        // Create an instance of the next view
-        let SignUpNumberViewPage = SignUpNumber().environmentObject(themeManager)
-
-        // Present the next view using NavigationView
-        let nextView = NavigationView {
-            SignUpNumberViewPage
-        }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
-        }
-    }
-
 }
 
 #if DEBUG

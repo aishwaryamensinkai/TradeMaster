@@ -9,10 +9,9 @@ import SwiftUI
 
 struct SignUpNumber: View {
     @EnvironmentObject var themeManager: ThemeManager // Inject the theme manager
-    @State private var email: String = ""
-    @State private var password: String = ""
     @State private var isChecked: Bool = false
-    
+    @StateObject private var viewModel = SignInNumberViewModel()
+
     func toggleCheckbox() {
         isChecked.toggle() // Toggle the checkbox state
     }
@@ -21,7 +20,7 @@ struct SignUpNumber: View {
         VStack {
             VStack(alignment: .leading, spacing: 50) {
                 Button(action: {
-                    navigateBack()
+                    navigateBack(themeManager: themeManager)
                 }) {
                     Image(systemName: "arrow.left")
                         .font(Font.custom("Roboto", size: 20).weight(.medium))
@@ -35,7 +34,7 @@ struct SignUpNumber: View {
                 
                 HStack(spacing: 0) {
                     Button(action: {
-                        navigateToSignIn()
+                        navigateToSignIn(themeManager: themeManager)
                     }) {
                         Text("Sign In")
                             .font(Font.custom("Roboto", size: 16).weight(.medium))
@@ -52,7 +51,7 @@ struct SignUpNumber: View {
                             .stroke(Color(red: 0.80, green: 0.84, blue: 0.91), lineWidth: 0.50)
                     )
                     Button(action: {
-                        navigateToSignUp()
+                        navigateToSignUp(themeManager: themeManager)
                     }) {
                         Text("Sign Up")
                             .font(Font.custom("Roboto", size: 16).weight(.medium))
@@ -88,7 +87,7 @@ struct SignUpNumber: View {
                     
                     Button(action: {
                         // Action when the "Sign In with Phone Email" is clicked
-                        navigateToEmail()
+                        navigateToSignUp(themeManager: themeManager)
                     }) {
                         Text("Sign Up with Email")
                             .font(Font.custom("Roboto", size: 14))
@@ -99,17 +98,7 @@ struct SignUpNumber: View {
                     .buttonStyle(PlainButtonStyle()) // Use PlainButtonStyle to remove default button styling
                 }
                   
-                TextField("Enter your Number", text: $email)
-                      .font(Font.custom("Roboto", size: 16))
-                      .padding(EdgeInsets(top: 10, leading: 16, bottom: 10, trailing: 16))
-                      .frame(width: 358)
-                      .background(Color(red: 0.98, green: 0.99, blue: 1))
-                      .cornerRadius(4)
-                      .overlay(
-                          RoundedRectangle(cornerRadius: 4)
-                              .stroke(Color(red: 0.80, green: 0.84, blue: 0.91), lineWidth: 0.50)
-                      )
-
+                FirebaseTextField(placeHolder: "Enter your Number", text: $viewModel.number)
               }
               VStack(alignment: .leading, spacing: 4) {
                 Text("Password")
@@ -119,16 +108,7 @@ struct SignUpNumber: View {
                   .foregroundColor(themeManager.currentTheme.sunTextColor) // Use sun text color for demonstration
                   .background(themeManager.currentTheme.sunBackgroundColor) // Use sun background color for demonstration
                   
-//                  SecureField("Enter your password", text: $password)
-//                      .font(Font.custom("Roboto", size: 16))
-//                      .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 48)) // Adjusted padding
-//                      .frame(width: 358)
-//                      .background(Color(red: 0.98, green: 0.99, blue: 1))
-//                      .cornerRadius(4)
-//                      .overlay(
-//                          RoundedRectangle(cornerRadius: 4)
-//                              .stroke(Color(red: 0.80, green: 0.84, blue: 0.91), lineWidth: 0.50)
-//                      )
+                  FirebaseSecureField(placeHolder: "Enter your password", text: $viewModel.password, showPassword: $viewModel.showPassword)
 
                   Spacer()
                   
@@ -153,12 +133,11 @@ struct SignUpNumber: View {
                           .foregroundColor(themeManager.currentTheme.sunTextColor) // Use sun text color for demonstration
                           .background(themeManager.currentTheme.sunBackgroundColor) // Use sun background color for demonstration
                   }
-
-
               }
                 
                 Button(action: {
-                    // Action to perform when the button is tapped
+                    // Register the user if number and password are provided
+                    viewModel.registerUserWithNumber(themeManager: themeManager)
                 }) {
                     HStack(spacing: 8) {
                         Text("Sign Up")
@@ -236,83 +215,6 @@ struct SignUpNumber: View {
         .background(Color.white)
         .ignoresSafeArea()
     }
-    
-    func navigateToSignIn() {
-        // Create an instance of the next view
-        let SignInPage = SignIn().environmentObject(themeManager)
-
-        // Present the next view using NavigationView
-        let nextView = NavigationView {
-            SignInPage
-        }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
-        }
-    }
-    
-    func navigateToSignUp() {
-        // Create an instance of the next view
-        let SignUpPage = SignUp().environmentObject(themeManager)
-
-        // Present the next view using NavigationView
-        let nextView = NavigationView {
-            SignUpPage
-        }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
-        }
-    }
-
-    func navigateBack() {
-        // Create an instance of the next view
-        let RegistrationViewPage = RegistrationView().environmentObject(themeManager)
-
-        // Present the next view using NavigationView
-        let nextView = NavigationView {
-            RegistrationViewPage
-        }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
-        }
-    }
-
-    func navigateToEmail() {
-        // Create an instance of the next view
-        let SignUpViewPage = SignUp().environmentObject(themeManager)
-
-        // Present the next view using NavigationView
-        let nextView = NavigationView {
-            SignUpViewPage
-        }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
-        }
-    }
-
 }
 
 #if DEBUG
