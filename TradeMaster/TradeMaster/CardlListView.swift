@@ -10,7 +10,9 @@ import SwiftUI
 struct CardlListView: View {
     @EnvironmentObject var themeManager: ThemeManager // Inject the theme manager
     @State private var cards: [Card] = [] // Assuming Card is a struct representing your card data
-    
+    @StateObject var cardmodel = CardModel() // Create an instance of CardModel
+
+
     var body: some View {
         VStack(alignment: .leading, spacing: 16) { // Adjusted spacing
             Spacer().frame(height: 40)
@@ -38,11 +40,11 @@ struct CardlListView: View {
                 .background(themeManager.currentTheme.sunBackgroundColor)
             
             VStack(spacing: 20) {
-                ForEach(cards, id: \.id) { card in
+                ForEach(cards) { card in
                     HStack {
                         Image(systemName: "creditcard.fill") // Add card icon
                             .foregroundColor(.blue) // Customize icon color as needed
-                        Text(card.cardno)
+                        Text(maskedCardNumber(card.cardNumber))
                             .foregroundColor(.gray)
                             .padding(.horizontal, 10) // Add some horizontal padding to the text
                     }
@@ -95,24 +97,24 @@ struct CardlListView: View {
         .ignoresSafeArea()
         .onAppear {
             // Fetch cards from the database when the view appears
-            fetchCardsFromDatabase()
+            // Call the fetchUserCards function when the view appears
+            cardmodel.fetchUserCards { fetchedCards in
+                // Update the state variable holding the cards
+                self.cards = fetchedCards
+            }
         }
     }
-    
-    private func fetchCardsFromDatabase() {
-        // Simulate fetching dummy data
-        cards = [
-            Card(id: UUID(), cardno: "1234 5678 9012 3456", name: "John Doe", mmyy: "12/24", cvv: "123"),
-            Card(id: UUID(), cardno: "9876 5432 1098 7654", name: "Jane Smith", mmyy: "10/23", cvv: "456"),
-            Card(id: UUID(), cardno: "1234 5678 9012 3456", name: "John Doe", mmyy: "12/24", cvv: "123"),
-            Card(id: UUID(), cardno: "9876 5432 1098 7654", name: "Jane Smith", mmyy: "10/23", cvv: "456"),
-            Card(id: UUID(), cardno: "1234 5678 9012 3456", name: "John Doe", mmyy: "12/24", cvv: "123"),
-            Card(id: UUID(), cardno: "9876 5432 1098 7654", name: "Jane Smith", mmyy: "10/23", cvv: "456"),
-            Card(id: UUID(), cardno: "1234 5678 9012 3456", name: "John Doe", mmyy: "12/24", cvv: "123"),
-            Card(id: UUID(), cardno: "9876 5432 1098 7654", name: "Jane Smith", mmyy: "10/23", cvv: "456")
-        ]
+    // Function to mask the card number
+    func maskedCardNumber(_ cardNumber: String) -> String {
+        guard cardNumber.count >= 16 else {
+            return cardNumber
+        }
+        
+        let maskedPart = String(repeating: "•", count: cardNumber.count - 4)
+        let visiblePart = String(cardNumber.suffix(4))
+        
+        return maskedPart + visiblePart
     }
-
 }
 
 #if DEBUG

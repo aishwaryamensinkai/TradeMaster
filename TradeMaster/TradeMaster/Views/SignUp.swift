@@ -14,7 +14,7 @@ struct SignUp: View {
     var message : String = ""
     @State private var showAlert = false // State variable to control the presentation of the alert
     @State private var alertMessage = "" // State variable to hold the message for the alert
-
+    @StateObject private var googleModel = GoogleSignIn()
     
     func toggleCheckbox() {
         isChecked.toggle() // Toggle the checkbox state
@@ -88,18 +88,6 @@ struct SignUp: View {
                     .lineSpacing(16)
                     .foregroundColor(themeManager.currentTheme.sunTextColor) // Use sun text color for demonstration
                     .background(themeManager.currentTheme.sunBackgroundColor) // Use sun background color for demonstration
-                    
-                    Button(action: {
-                        // Action when the "Sign Up with Phone Number" is clicked
-                        navigateToSignUpNumber(themeManager: themeManager)
-                    }) {
-                        Text("Sign Up with Phone Number")
-                            .font(Font.custom("Roboto", size: 14))
-                            .tracking(0.40)
-                            .lineSpacing(16)
-                            .foregroundColor(Color(red: 0.07, green: 0.32, blue: 0.45))
-                    }
-                    .buttonStyle(PlainButtonStyle()) // Use PlainButtonStyle to remove default button styling
                 }
                   
                   FirebaseTextField(placeHolder: "Enter your email", text: $viewModel.email)
@@ -212,6 +200,14 @@ struct SignUp: View {
                 
                 Button(action: {
                     // Action to perform when the button is tapped
+                    Task{
+                        do{
+                            try await googleModel.signInGoogle(themeManager: themeManager)
+//                            navigateToWelcome(themeManager: themeManager)
+                        } catch{
+                            print(error)
+                        }
+                    }
                 }) {
                     HStack(spacing: 8) {
                         // Custom Google icon

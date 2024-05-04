@@ -16,6 +16,8 @@ struct Onboarding2: View {
                 Spacer()
                 Button(action: {
                     // Action when the button is tapped
+                    navigateToSignIn(themeManager: themeManager)
+
                 }) {
                     Text("Skip")
                         .font(Font.custom("Roboto", size: 20).weight(.medium))

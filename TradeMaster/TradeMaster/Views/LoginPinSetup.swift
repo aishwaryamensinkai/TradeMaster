@@ -10,8 +10,8 @@ import SwiftUI
 struct LoginPinSetup: View {
     @EnvironmentObject var themeManager: ThemeManager // Inject the theme manager
     @State private var passcode: String = ""
+    @StateObject private var viewModel = UserDetailsModel()
 
-    
     var body: some View {
         VStack {
             Button(action: {
@@ -67,7 +67,7 @@ struct LoginPinSetup: View {
             Spacer().frame(height: 30)
 
             Button(action: {
-                navigateToAccountSetUpEmail(themeManager: themeManager)
+                viewModel.storePasscodeInFirestore(passcode: passcode,themeManager: themeManager)
             }) {
                 Text("Save")
                     .font(Font.custom("Roboto", size: 16).weight(.medium))

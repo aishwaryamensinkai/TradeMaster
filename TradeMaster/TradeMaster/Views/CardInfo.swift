@@ -87,7 +87,28 @@ struct CardInfo: View {
                 Spacer().frame(height: 60)
 
                 Button(action: {
-                    navigateToCardlListView(themeManager: themeManager)
+                    if viewModel.mmyy.count != 5 || !viewModel.cardno.allSatisfy({ $0.isNumber }) {
+                        // Show an alert or provide feedback to the user that the card number is invalid
+                        alertMessage = "Please enter in the format MM/YY."
+                        TradeMaster.showAlert(message: alertMessage)
+                    } else
+                    if viewModel.cardno.count != 16 || !viewModel.cardno.allSatisfy({ $0.isNumber }) {
+                        // Show an alert or provide feedback to the user that the card number is invalid
+                        alertMessage = "Please enter a 16-digit numeric card number."
+                        TradeMaster.showAlert(message: alertMessage)
+                    } else
+                    if viewModel.cardno.isEmpty || viewModel.name.isEmpty || viewModel.mmyy.isEmpty || viewModel.cvv.isEmpty {
+                            // Show an alert or provide feedback to the user that all fields are required
+                            alertMessage = "Please fill in all fields."
+                        TradeMaster.showAlert(message: alertMessage)
+                    } else if viewModel.cvv.count != 3 || !viewModel.cvv.allSatisfy({ $0.isNumber }) {
+                        // Show an alert or provide feedback to the user that the CVV is invalid
+                        alertMessage = "Please enter a 3-digit numeric CVV."
+                        TradeMaster.showAlert(message: alertMessage)
+                    }else {
+                        viewModel.storeCardDetailsInFirestore(viewModel: viewModel, themeManager: themeManager)
+                        //                    navigateToCardlListView(themeManager: themeManager)
+                    }
                 }) {
                     HStack(spacing: 8) {
                         Text("Save")

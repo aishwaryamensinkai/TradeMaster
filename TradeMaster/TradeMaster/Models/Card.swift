@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct Card{
-    let id: UUID
-    let cardno : String
-    let name : String
-    let mmyy : String
-    let cvv : String?
+struct Card: Identifiable {
+    let id = UUID()
+    let cardNumber: String
+    let nameOnCard: String
+    let expirationDate: String
+    let cvv: String
 }

@@ -88,18 +88,6 @@ struct SignIn: View {
                     .lineSpacing(16)
                     .foregroundColor(themeManager.currentTheme.sunTextColor) // Use sun text color for demonstration
                     .background(themeManager.currentTheme.sunBackgroundColor) // Use sun background color for demonstration
-                    
-                    Button(action: {
-                        // Action when the "Sign In with Phone Number" is clicked
-                        navigateToSignInNumber(themeManager: themeManager)
-                    }) {
-                        Text("Sign In with Phone Number")
-                            .font(Font.custom("Roboto", size: 14))
-                            .tracking(0.40)
-                            .lineSpacing(16)
-                            .foregroundColor(Color(red: 0.07, green: 0.32, blue: 0.45))
-                    }
-                    .buttonStyle(PlainButtonStyle()) // Use PlainButtonStyle to remove default button styling
                 }
                   FirebaseTextField(placeHolder: "Enter your email", text: $viewModel.email)
 
@@ -117,7 +105,20 @@ struct SignIn: View {
                   
                   Spacer()
                   Button(action: {
-                      // Action when the "Forgot Password?" is clicked
+                      // Check if email is valid
+                          guard isValidEmail(viewModel.email) else {
+                              // Show an alert if the email is invalid
+                              alertMessage = "Please enter a valid email address."
+                              showAlert = true
+                              return
+                          }
+                          
+                          // Call resetPassword function with email
+                          viewModel.resetPassword(email: viewModel.email) { message in
+                              // Show an alert with the reset password message
+                              alertMessage = message
+                              showAlert = true
+                          }
                   }) {
                       Text("Forgot Password?")
                           .font(Font.custom("Roboto", size: 12))
@@ -186,20 +187,16 @@ struct SignIn: View {
                 }
                 .frame(width: 358, height: 20)
                 
-                GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: .dark, style: .wide, state: .normal)){
-                    
+                Button(action: {
+                    // Action to perform when the button is tapped
                     Task{
                         do{
-                            try await googleModel.signInGoogle()
-                            navigateToMainPage(themeManager: themeManager)
+                            try await googleModel.signInGoogle(themeManager: themeManager)
+//                            navigateToWelcome(themeManager: themeManager)
                         } catch{
                             print(error)
                         }
                     }
-                }
-                
-                Button(action: {
-                    // Action to perform when the button is tapped
                 }) {
                     HStack(spacing: 8) {
                         // Custom Google icon

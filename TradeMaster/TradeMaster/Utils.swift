@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 import UIKit
 
+//newsApiKey = "ed8063f6526648ee8ec4ef0bb9ab7fd4"
+
 final class Utils{
     static let shared = Utils()
     private init(){}
@@ -84,44 +86,6 @@ func navigateBack(themeManager: ThemeManager) {
     // Present the next view using NavigationView
     let nextView = NavigationView {
         RegistrationViewPage
-    }
-
-    // Get the relevant window scene
-    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-        if let window = windowScene.windows.first {
-            // Present the navigation view
-            window.rootViewController = UIHostingController(rootView: nextView)
-            window.makeKeyAndVisible()
-        }
-    }
-}
-
-func navigateToSignInNumber(themeManager: ThemeManager) {
-    // Create an instance of the next view
-    let SignInNumberViewPage = SignInNumber().environmentObject(themeManager)
-
-    // Present the next view using NavigationView
-    let nextView = NavigationView {
-        SignInNumberViewPage
-    }
-
-    // Get the relevant window scene
-    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-        if let window = windowScene.windows.first {
-            // Present the navigation view
-            window.rootViewController = UIHostingController(rootView: nextView)
-            window.makeKeyAndVisible()
-        }
-    }
-}
-
-func navigateToSignUpNumber(themeManager: ThemeManager) {
-    // Create an instance of the next view
-    let SignUpNumberViewPage = SignUpNumber().environmentObject(themeManager)
-
-    // Present the next view using NavigationView
-    let nextView = NavigationView {
-        SignUpNumberViewPage
     }
 
     // Get the relevant window scene
@@ -364,7 +328,24 @@ func navigateToCardlListView(themeManager: ThemeManager) {
 
 func navigateToMainPage(themeManager: ThemeManager) {
         // Create an instance of the next view
-        let mainPageSetup = MainPage().environmentObject(themeManager)
+        let mainPageSetup = ContentView().environmentObject(themeManager)
+        let nextView = NavigationView {
+            mainPageSetup
+        }
+
+        // Get the relevant window scene
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            if let window = windowScene.windows.first {
+                // Present the navigation view
+                window.rootViewController = UIHostingController(rootView: nextView)
+                window.makeKeyAndVisible()
+            }
+    }
+}
+
+func navigatecontentview(themeManager: ThemeManager) {
+        // Create an instance of the next view
+        let mainPageSetup = ContentView().environmentObject(themeManager)
         let nextView = NavigationView {
             mainPageSetup
         }
