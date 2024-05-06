@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct WalletView: View {
     @EnvironmentObject var themeManager: ThemeManager // Inject the theme manager
 
@@ -21,25 +19,15 @@ struct WalletView: View {
     
     var body: some View {
         VStack {
-            // Header
-            HStack {
-                Button(action: {
+            Button(action: {
                     // Action for going back
                     let themeManager = ThemeManager() // Create an instance of ThemeManager
                     navigateToMainPage(themeManager: themeManager)
-                }) {
-                    Image(systemName: "chevron.left")
-                        .foregroundColor(.blue)
-                        .font(.title)
-                }
-                Spacer()
-                Text("Wallet")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                Spacer()
+            }) {
+                Image(systemName: "chevron.left")
+                    .foregroundColor(.blue)
+                    .font(.title)
             }
-            .padding()
-            
             // Balance Section
             VStack {
                 Text("Your Balance")
@@ -89,7 +77,9 @@ struct WalletView: View {
                 Spacer()
             }
             .padding()
-        }
+        }        
+        .navigationBarHidden(true) // Hide the navigation bar
+
     }
 }
 
@@ -127,5 +117,7 @@ struct TransactionRowView: View {
         .background(Color.white)
         .cornerRadius(8)
         .shadow(color: Color.black.opacity(0.2), radius: 4, x: 0, y: 2)
+        .navigationBarHidden(true) // Hide the navigation bar
+
     }
 }

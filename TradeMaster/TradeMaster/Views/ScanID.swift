@@ -19,98 +19,103 @@ struct ScanID: View {
     @State private var profileImageURL: URL? // State variable to hold the profile image URL
 
     var body: some View {
-        VStack {
-            Spacer().frame(height: 40)
+        ScrollView{
             
-            if let image = selectedImage {
-                Image(uiImage: image)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 350, height: 400)
-            } else if let imageURL = profileImageURL {
-                AsyncImage(url: imageURL) { image in
-                    image
+            VStack {
+                Spacer().frame(height: 10)
+                Spacer().frame(height:  50)
+
+                if let image = selectedImage {
+                    Image(uiImage: image)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 350, height: 400)
-                } placeholder: {
-                    // You can use a placeholder image here if needed
-                    ProgressView()
-                }
-            } else {
-                Image("CameraFrame")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 350, height: 400)
-            }
-            
-            Text("Please scan front\nof your ID card")
-                .font(Font.custom("Roboto", size: 26).weight(.bold))
-                .tracking(0.08)
-                .multilineTextAlignment(.center)
-                .foregroundColor(themeManager.currentTheme.sunTextColor)
-                .background(themeManager.currentTheme.sunBackgroundColor)
-            
-            Spacer().frame(height: 40)
-            
-            Button(action: {
-                // Present image picker when the button is tapped
-                isImagePickerPresented = true
-            }) {
-                VStack(spacing: 4) {
-                    HStack(spacing: 0) {
-                        ZStack() {
-                            ZStack() { }
-                                .frame(width: 19.50, height: 17.25)
-                                .offset(x: 0, y: -0.38)
-                            Image(systemName: "camera.fill")
-                                .foregroundColor(.white)
-                                .font(.system(size: 20))
-                        }
-                        .frame(width: 24, height: 24)
+                } else if let imageURL = profileImageURL {
+                    AsyncImage(url: imageURL) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 350, height: 400)
+                    } placeholder: {
+                        // You can use a placeholder image here if needed
+                        ProgressView()
                     }
-                    .padding(12)
-                    .background(Color(red: 0.07, green: 0.32, blue: 0.45))
-                    .cornerRadius(4)
-                    Text("Scan ID")
-                        .font(Font.custom("Roboto", size: 14).weight(.medium))
-                        .tracking(0.10)
-                        .lineSpacing(20)
-                        .foregroundColor(themeManager.currentTheme.sunTextColor)
-                        .background(themeManager.currentTheme.sunBackgroundColor)
+                } else {
+                    Image("CameraFrame")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 350, height: 400)
                 }
-                .frame(width: 80, height: 72)
+                
+                Text("Please scan front\nof your ID card")
+                    .font(Font.custom("Roboto", size: 26).weight(.bold))
+                    .tracking(0.08)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(themeManager.currentTheme.sunTextColor)
+                    .background(themeManager.currentTheme.sunBackgroundColor)
+                
+                Spacer().frame(height: 40)
+                
+                Button(action: {
+                    // Present image picker when the button is tapped
+                    isImagePickerPresented = true
+                }) {
+                    VStack(spacing: 4) {
+                        HStack(spacing: 0) {
+                            ZStack() {
+                                ZStack() { }
+                                    .frame(width: 19.50, height: 17.25)
+                                    .offset(x: 0, y: -0.38)
+                                Image(systemName: "camera.fill")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 20))
+                            }
+                            .frame(width: 24, height: 24)
+                        }
+                        .padding(12)
+                        .background(Color(red: 0.07, green: 0.32, blue: 0.45))
+                        .cornerRadius(4)
+                        Text("Scan ID")
+                            .font(Font.custom("Roboto", size: 14).weight(.medium))
+                            .tracking(0.10)
+                            .lineSpacing(20)
+                            .foregroundColor(themeManager.currentTheme.sunTextColor)
+                            .background(themeManager.currentTheme.sunBackgroundColor)
+                    }
+                    .frame(width: 80, height: 72)
+                }
+                
+                Spacer().frame(height: 40)
+                
+                Button(action: {
+                    // Action when the button is tapped
+                    navigateToAccountVerify5(themeManager: themeManager)
+                }) {
+                    Text("Next")
+                        .font(Font.custom("Roboto", size: 28).weight(.black))
+                        .tracking(0.10)
+                        .lineSpacing(24)
+                        .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.96))
+                        .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                }
+                .frame(width: 358, height: 40)
+                .background(Color(red: 0.07, green: 0.32, blue: 0.45))
+                .cornerRadius(4)
             }
-
-            Spacer().frame(height: 40)
-            
-            Button(action: {
-                // Action when the button is tapped
-                navigateToAccountVerify5(themeManager: themeManager)
-            }) {
-                Text("Next")
-                    .font(Font.custom("Roboto", size: 28).weight(.black))
-                    .tracking(0.10)
-                    .lineSpacing(24)
-                    .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.96))
-                    .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(themeManager.currentTheme.sunBackgroundColor)
+            .foregroundColor(themeManager.currentTheme.sunTextColor)
+            .background(Color.white)
+            .ignoresSafeArea()
+            .sheet(isPresented: $isImagePickerPresented) {
+                // Present image picker when isImagePickerPresented is true
+                ImagePicker(selectedImage: $selectedImage) { image in
+                    // Handle image upload here
+                    uploadImageToFirestore(image: image)
+                }
             }
-            .frame(width: 358, height: 40)
-            .background(Color(red: 0.07, green: 0.32, blue: 0.45))
-            .cornerRadius(4)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(themeManager.currentTheme.sunBackgroundColor)
-        .foregroundColor(themeManager.currentTheme.sunTextColor)
-        .background(Color.white)
         .ignoresSafeArea()
-        .sheet(isPresented: $isImagePickerPresented) {
-            // Present image picker when isImagePickerPresented is true
-            ImagePicker(selectedImage: $selectedImage) { image in
-                // Handle image upload here
-                uploadImageToFirestore(image: image)
-            }
-        }
     }
 
     func uploadImageToFirestore(image: UIImage) {

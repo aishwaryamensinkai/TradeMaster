@@ -2,62 +2,32 @@
 //  CoinDataService.swift
 //  TradeMaster
 //
-//  Created by Aishwarya Girish Mensinkai on 5/4/24.
+//  Created by Aishwarya Girish Mensinkai on 5/2/24.
 //
 
 import Foundation
-
+import Combine
 
 class CoinDataService {
     
-    private let urlString = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=24h&locale=en"
+    @Published var allCoins: [CoinModel] = []
     
-    func fetchCoins() async throws -> [Coin] {
-        guard let url = URL(string: urlString) else { return [] }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            let coins = try JSONDecoder().decode([Coin].self, from: data)
-            return coins
-        } catch {
-            print("DEBUG: Error \(error.localizedDescription)")
-            return []
-        }
+    var coinSubscription: AnyCancellable?
+    
+    init() {
+        getCoins()
     }
-}
+    
+    func getCoins() {
+        guard let url = URL(string: "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=true&price_change_percentage=24h") else { return }
 
-extension CoinDataService {
-    func fetchCoinsWithResult(completion: @escaping(Result<[Coin], CoinAPIError>) -> Void) {
-        guard let url = URL(string: urlString) else { return }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                completion(.failure(.unknownedError(error: error)))
-                return
-            }
-            
-            guard let httpResponse = response as? HTTPURLResponse else {
-                completion(.failure(.requestFailed(description: "Request failed")))
-                return
-            }
-            
-            guard httpResponse.statusCode == 200 else {
-                completion(.failure(.invalidStatusCode(statusCode: httpResponse.statusCode)))
-                return
-            }
-            
-            guard let data = data else {
-                completion(.failure(.invalidData))
-                return
-            }
-            
-            do {
-                let coins = try JSONDecoder().decode([Coin].self, from: data)
-                completion(.success(coins))
-            } catch {
-                print("DEBUG: Failed to decode with error \(error)")
-                completion(.failure(.jsonParsingFailure))
-            }
-        }.resume()
+        coinSubscription = NetworkingManager.download(url: url)
+            .decode(type: [CoinModel].self, decoder: JSONDecoder())
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (returnedCoins) in
+                self?.allCoins = returnedCoins
+                self?.coinSubscription?.cancel()
+            })
     }
+    
 }

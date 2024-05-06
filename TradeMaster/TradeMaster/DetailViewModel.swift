@@ -2,98 +2,106 @@
 //  DetailViewModel.swift
 //  TradeMaster
 //
-//  Created by Aishwarya Girish Mensinkai on 5/4/24.
+//  Created by Aishwarya Girish Mensinkai on 5/2/24.
 //
 
 import Foundation
-
+import Combine
 
 class DetailViewModel: ObservableObject {
+    
     @Published var overviewStatistics: [StatisticModel] = []
     @Published var additionalStatistics: [StatisticModel] = []
-    @Published var coinDetails = [CoinDetailModel]()
-    @Published var errorMessage: String?
-    @Published var coin: Coin
-    private let coinDetailService: CoinDetailDataService
-    
     @Published var coinDescription: String? = nil
     @Published var websiteURL: String? = nil
     @Published var redditURL: String? = nil
+
+    @Published var coin: CoinModel
+    private let coinDetailService: CoinDetailDataService
+    private var cancellables = Set<AnyCancellable>()
     
-    init(coin: Coin) {
+    init(coin: CoinModel) {
         self.coin = coin
         self.coinDetailService = CoinDetailDataService(coin: coin)
-        Task {
-            do {
-                try await getCoinDetails()
-            } catch {
-                print("Error fetching coin details: \(error)")
-            }
-        }
+        self.addSubscribers()
     }
     
-    @MainActor
-    func getCoinDetails() async throws {
-        self.coinDetails = try await coinDetailService.getCoinDetails()
+    private func addSubscribers() {
         
-        // overview
-        let price = coin.currentPrice.asCurrencyWith6Decimals()
-        let priceChange = coin.priceChangePercentage24H
-        let priceStat = StatisticModel(title: "Current Price", value: price, percentageChange: priceChange)
+        coinDetailService.$coinDetails
+            .combineLatest($coin)
+            .map(mapDataToStatistics)
+            .sink { [weak self] (returnedArrays) in
+                self?.overviewStatistics = returnedArrays.overview
+                self?.additionalStatistics = returnedArrays.additional
+            }
+            .store(in: &cancellables)
         
-        let marketCap = "$" + (coin.marketCap.asCurrencyWith6Decimals())
-        let marketCapChange = coin.marketCapChangePercentage24H
-        let marketCapStat = StatisticModel(title: "Market Capitalization", value: marketCap, percentageChange: marketCapChange)
+        coinDetailService.$coinDetails
+            .sink { [weak self] (returnedCoinDetails) in
+                self?.coinDescription = returnedCoinDetails?.readableDescription
+                self?.websiteURL = returnedCoinDetails?.links?.homepage?.first
+                self?.redditURL = returnedCoinDetails?.links?.subredditURL
+            }
+            .store(in: &cancellables)
         
-        let rank = "\(coin.marketCapRank)"
+    }
+    
+    
+    private func mapDataToStatistics(coinDetailModel: CoinDetailModel?, coinModel: CoinModel) -> (overview: [StatisticModel], additional: [StatisticModel]) {
+        let overviewArray = createOverviewArray(coinModel: coinModel)
+        let additionalArray = createAdditionalArray(coinDetailModel: coinDetailModel, coinModel: coinModel)
+        return (overviewArray, additionalArray)
+    }
+    
+    private func createOverviewArray(coinModel: CoinModel) -> [StatisticModel] {
+        let price = coinModel.currentPrice.asCurrencyWith6Decimals()
+        let pricePercentChange = coinModel.priceChangePercentage24H
+        let priceStat = StatisticModel(title: "Current Price", value: price, percentageChange: pricePercentChange)
+        
+        let marketCap = "$" + (coinModel.marketCap?.formattedWithAbbreviations() ?? "")
+        let marketCapPercentChange = coinModel.marketCapChangePercentage24H
+        let marketCapStat = StatisticModel(title: "Market Capitalization", value: marketCap, percentageChange: marketCapPercentChange)
+        
+        let rank = "\(coinModel.rank)"
         let rankStat = StatisticModel(title: "Rank", value: rank)
         
-        let volume = "$" + (coin.totalVolume?.asCurrencyWith6Decimals() ?? "")
+        let volume = "$" + (coinModel.totalVolume?.formattedWithAbbreviations() ?? "")
         let volumeStat = StatisticModel(title: "Volume", value: volume)
         
-        self.overviewStatistics = [priceStat, marketCapStat, rankStat, volumeStat]
+        let overviewArray: [StatisticModel] = [
+            priceStat, marketCapStat, rankStat, volumeStat
+        ]
+        return overviewArray
+    }
+    
+    private func createAdditionalArray(coinDetailModel: CoinDetailModel?, coinModel: CoinModel) -> [StatisticModel] {
         
-        // additional
-        let high = coin.high24H?.asCurrencyWith6Decimals() ?? "n/a"
+        let high = coinModel.high24H?.asCurrencyWith6Decimals() ?? "n/a"
         let highStat = StatisticModel(title: "24h High", value: high)
         
-        let low = coin.low24H?.asCurrencyWith6Decimals() ?? "n/a"
+        let low = coinModel.low24H?.asCurrencyWith6Decimals() ?? "n/a"
         let lowStat = StatisticModel(title: "24h Low", value: low)
         
-        let priceChange1 = coin.priceChange24H?.asCurrencyWith6Decimals() ?? "n/a"
-        let pricePercentChange2 = coin.priceChangePercentage24H
-        let priceChangeStat = StatisticModel(title: "24 Price Change", value: priceChange1, percentageChange: pricePercentChange2)
+        let priceChange = coinModel.priceChange24H?.asCurrencyWith6Decimals() ?? "n/a"
+        let pricePercentChange = coinModel.priceChangePercentage24H
+        let priceChangeStat = StatisticModel(title: "24h Price Change", value: priceChange, percentageChange: pricePercentChange)
         
-        let marketCapChange1 = "$" + (coin.marketCapChange24H?.asCurrencyWith6Decimals() ?? "")
-        let marketCapPercentChange2 = coin.marketCapChangePercentage24H
-        let marketCapChangeStat = StatisticModel(title: "24 Market Cap Change", value: marketCapChange1, percentageChange: marketCapPercentChange2)
+        let marketCapChange = "$" + (coinModel.marketCapChange24H?.formattedWithAbbreviations() ?? "")
+        let marketCapPercentChange = coinModel.marketCapChangePercentage24H
+        let marketCapChangeStat = StatisticModel(title: "24h Market Cap Change", value: marketCapChange, percentageChange: marketCapPercentChange)
         
-        let blockTime = coinDetails.isEmpty ? 0 : coinDetails[0].blockTimeInMinutes ?? 0
+        let blockTime = coinDetailModel?.blockTimeInMinutes ?? 0
         let blockTimeString = blockTime == 0 ? "n/a" : "\(blockTime)"
         let blockStat = StatisticModel(title: "Block Time", value: blockTimeString)
         
-        let hashing = coinDetails.isEmpty ? "n/a" : coinDetails[0].hashingAlgorithm ?? "n/a"
+        let hashing = coinDetailModel?.hashingAlgorithm ?? "n/a"
         let hashingStat = StatisticModel(title: "Hashing Algorithm", value: hashing)
         
-        self.additionalStatistics = [highStat, lowStat, priceChangeStat, marketCapChangeStat, blockStat, hashingStat]
-        
-        // description
-
-        self.coinDescription = coinDetails.first?.readableDescription
-        self.websiteURL = coinDetails.first?.links?.homepage?.first
-        self.redditURL = coinDetails.first?.links?.subredditURL
+        let additionalArray: [StatisticModel] = [
+            highStat, lowStat, priceChangeStat, marketCapChangeStat, blockStat, hashingStat
+        ]
+        return additionalArray
     }
     
-    func getCoinDetailsWithCompletionHandler() {
-        coinDetailService.getCoinDetailsWithResult { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let coinDetails):
-                    self?.coinDetails = coinDetails
-                case .failure(let error):
-                    self?.errorMessage = error.localizedDescription
-                }
-            }
-        }
-    }
 }
