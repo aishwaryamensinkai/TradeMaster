@@ -62,18 +62,11 @@ func showAlert(message: String) {
 
 func navigateToSignIn(themeManager: ThemeManager) {
     // Create an instance of the next view
-    let SignInPage = SignIn().environmentObject(themeManager)
-
-    // Present the next view using NavigationView
-    let nextView = NavigationView {
-        SignInPage
-    }
-
-    // Get the relevant window scene
+    let view = SignIn().environmentObject(themeManager)
+    // Present the next view without NavigationView
     if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
         if let window = windowScene.windows.first {
-            // Present the navigation view
-            window.rootViewController = UIHostingController(rootView: nextView)
+            window.rootViewController = UIHostingController(rootView: view)
             window.makeKeyAndVisible()
         }
     }
@@ -81,18 +74,11 @@ func navigateToSignIn(themeManager: ThemeManager) {
 
 func navigateBack(themeManager: ThemeManager) {
     // Create an instance of the next view
-    let RegistrationViewPage = RegistrationView().environmentObject(themeManager)
-
-    // Present the next view using NavigationView
-    let nextView = NavigationView {
-        RegistrationViewPage
-    }
-
-    // Get the relevant window scene
+    let view = RegistrationView().environmentObject(themeManager)
+    // Present the next view without NavigationView
     if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
         if let window = windowScene.windows.first {
-            // Present the navigation view
-            window.rootViewController = UIHostingController(rootView: nextView)
+            window.rootViewController = UIHostingController(rootView: view)
             window.makeKeyAndVisible()
         }
     }
@@ -100,262 +86,207 @@ func navigateBack(themeManager: ThemeManager) {
 
 func navigateToSignUp(themeManager: ThemeManager) {
     // Create an instance of the next view
-    let SignUpPage = SignUp().environmentObject(themeManager)
-
-    // Present the next view using NavigationView
-    let nextView = NavigationView {
-        SignUpPage
-    }
-
-    // Get the relevant window scene
+    let view = SignUp().environmentObject(themeManager)
+    // Present the next view without NavigationView
     if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
         if let window = windowScene.windows.first {
-            // Present the navigation view
-            window.rootViewController = UIHostingController(rootView: nextView)
+            window.rootViewController = UIHostingController(rootView: view)
             window.makeKeyAndVisible()
         }
     }
 }
 
 func navigateToWelcome(themeManager: ThemeManager) {
-        // Create an instance of the next view
-        let welcome = Welcome().environmentObject(themeManager)
-        let nextView = NavigationView {
-            welcome
+    // Create an instance of the next view
+    let view = Welcome().environmentObject(themeManager)
+    // Present the next view without NavigationView
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+        if let window = windowScene.windows.first {
+            window.rootViewController = UIHostingController(rootView: view)
+            window.makeKeyAndVisible()
         }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
     }
 }
 
 func navigateToLoginPinSetup(themeManager: ThemeManager) {
-        // Create an instance of the next view
-        let loginpinSetup = LoginPinSetup().environmentObject(themeManager)
-        let nextView = NavigationView {
-            loginpinSetup
+    // Create an instance of the next view
+    let view = LoginPinSetup().environmentObject(themeManager)
+    // Present the next view without NavigationView
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+        if let window = windowScene.windows.first {
+            window.rootViewController = UIHostingController(rootView: view)
+            window.makeKeyAndVisible()
         }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
     }
 }
 
 func navigateToAccountSetUpEmail(themeManager: ThemeManager) {
-        // Create an instance of the next view
-        let acountSetup = AccountSetUpEmail().environmentObject(themeManager)
-        let nextView = NavigationView {
-            acountSetup
+    // Create an instance of the next view
+    let view = AccountSetUpEmail().environmentObject(themeManager)
+    // Present the next view without NavigationView
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+        if let window = windowScene.windows.first {
+            window.rootViewController = UIHostingController(rootView: view)
+            window.makeKeyAndVisible()
         }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
     }
 }
 
 func navigateToAccountVerify1(themeManager: ThemeManager) {
-        // Create an instance of the next view
-        let acountSetup = AccountVerification1().environmentObject(themeManager)
-        let nextView = NavigationView {
-            acountSetup
+    // Create an instance of the next view
+    let view = AccountVerification1().environmentObject(themeManager)
+    // Present the next view without NavigationView
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+        if let window = windowScene.windows.first {
+            window.rootViewController = UIHostingController(rootView: view)
+            window.makeKeyAndVisible()
         }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
     }
 }
 
 
 func navigateToAccountVerify2(themeManager: ThemeManager) {
-        // Create an instance of the next view
-        let acountSetup = AccountVerification2().environmentObject(themeManager)
-        let nextView = NavigationView {
-            acountSetup
+    // Create an instance of the next view
+    let view = AccountVerification2().environmentObject(themeManager)
+    // Present the next view without NavigationView
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+        if let window = windowScene.windows.first {
+            window.rootViewController = UIHostingController(rootView: view)
+            window.makeKeyAndVisible()
         }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
     }
 }
 
-
-
-
 func navigateToAccountVerify3(themeManager: ThemeManager) {
-        // Create an instance of the next view
-        let acountSetup = AccountVerification3().environmentObject(themeManager)
-        let nextView = NavigationView {
-            acountSetup
+    // Create an instance of the next view
+    let view = AccountVerification3().environmentObject(themeManager)
+    // Present the next view without NavigationView
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+        if let window = windowScene.windows.first {
+            window.rootViewController = UIHostingController(rootView: view)
+            window.makeKeyAndVisible()
         }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
     }
 }
 
 func navigateToAccountVerify4(themeManager: ThemeManager) {
-        // Create an instance of the next view
-        let acountSetup = AccountVerification4().environmentObject(themeManager)
-        let nextView = NavigationView {
-            acountSetup
+    // Create an instance of the next view
+    let view = AccountVerification4().environmentObject(themeManager)
+    // Present the next view without NavigationView
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+        if let window = windowScene.windows.first {
+            window.rootViewController = UIHostingController(rootView: view)
+            window.makeKeyAndVisible()
         }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
     }
 }
 
 func navigateToAccountVerify5(themeManager: ThemeManager) {
-        // Create an instance of the next view
-        let acountSetup = AccountVerification5().environmentObject(themeManager)
-        let nextView = NavigationView {
-            acountSetup
+    // Create an instance of the next view
+    let view = AccountVerification5().environmentObject(themeManager)
+    // Present the next view without NavigationView
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+        if let window = windowScene.windows.first {
+            window.rootViewController = UIHostingController(rootView: view)
+            window.makeKeyAndVisible()
         }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
     }
 }
 
 func navigateToScanID(themeManager: ThemeManager) {
-        // Create an instance of the next view
-        let id = ScanID().environmentObject(themeManager)
-        let nextView = NavigationView {
-            id
+    // Create an instance of the next view
+    let view = ScanID().environmentObject(themeManager)
+    // Present the next view without NavigationView
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+        if let window = windowScene.windows.first {
+            window.rootViewController = UIHostingController(rootView: view)
+            window.makeKeyAndVisible()
         }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
     }
 }
 
 func navigateToAddingcard(themeManager: ThemeManager) {
-        // Create an instance of the next view
-        let acountSetup = AddingCard().environmentObject(themeManager)
-        let nextView = NavigationView {
-            acountSetup
+    // Create an instance of the next view
+    let view = AddingCard().environmentObject(themeManager)
+    // Present the next view without NavigationView
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+        if let window = windowScene.windows.first {
+            window.rootViewController = UIHostingController(rootView: view)
+            window.makeKeyAndVisible()
         }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
     }
 }
 
 
 func navigateToCardInfo(themeManager: ThemeManager) {
-        // Create an instance of the next view
-        let cardinfoSetup = CardInfo().environmentObject(themeManager)
-        let nextView = NavigationView {
-            cardinfoSetup
+    // Create an instance of the next view
+    let view = CardInfo().environmentObject(themeManager)
+    // Present the next view without NavigationView
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+        if let window = windowScene.windows.first {
+            window.rootViewController = UIHostingController(rootView: view)
+            window.makeKeyAndVisible()
         }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
     }
 }
 
 func navigateToCardlListView(themeManager: ThemeManager) {
-        // Create an instance of the next view
-        let cardlistSetup = CardlListView().environmentObject(themeManager)
-        let nextView = NavigationView {
-            cardlistSetup
+    // Create an instance of the next view
+    let view = CardlListView().environmentObject(themeManager)
+    // Present the next view without NavigationView
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+        if let window = windowScene.windows.first {
+            window.rootViewController = UIHostingController(rootView: view)
+            window.makeKeyAndVisible()
         }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
     }
 }
 
 func navigateToMainPage(themeManager: ThemeManager) {
-        // Create an instance of the next view
-        let mainPageSetup = ContentView().environmentObject(themeManager)
-        let nextView = NavigationView {
-            mainPageSetup
+    // Create an instance of the next view
+    let view = MainPage().environmentObject(themeManager)
+    // Present the next view without NavigationView
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+        if let window = windowScene.windows.first {
+            window.rootViewController = UIHostingController(rootView: view)
+            window.makeKeyAndVisible()
         }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
     }
 }
 
-func navigatecontentview(themeManager: ThemeManager) {
-        // Create an instance of the next view
-        let mainPageSetup = ContentView().environmentObject(themeManager)
-        let nextView = NavigationView {
-            mainPageSetup
+func navigateToProfile(themeManager: ThemeManager) {
+    // Create an instance of the next view
+    let view = ProfileView().environmentObject(themeManager)
+    // Present the next view without NavigationView
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+        if let window = windowScene.windows.first {
+            window.rootViewController = UIHostingController(rootView: view)
+            window.makeKeyAndVisible()
         }
+    }
+}
 
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
+func navigateToWallet(themeManager: ThemeManager) {
+    // Create an instance of the next view
+    let view = WalletView().environmentObject(themeManager)
+    // Present the next view without NavigationView
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+        if let window = windowScene.windows.first {
+            window.rootViewController = UIHostingController(rootView: view)
+            window.makeKeyAndVisible()
+        }
+    }
+}
+
+
+func navigateToNews(newsManager: NewsDownloadManager) {
+    // Create an instance of the next view
+    let view = NewsSheetView(newsManager: newsManager)
+    // Present the next view without NavigationView
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+        if let window = windowScene.windows.first {
+            window.rootViewController = UIHostingController(rootView: view)
+            window.makeKeyAndVisible()
+        }
     }
 }

@@ -20,124 +20,130 @@ struct AccountSetUpEmail: View {
     
 
     var body: some View {
-        VStack(spacing: 20) {
-            Text("Add your personal info")
-                .font(.custom("Roboto", size: 32))
-                .fontWeight(.bold)
-                .foregroundColor(themeManager.currentTheme.sunTextColor)
-                .padding(.bottom, 10)
-            Text("This info needs to be accurate with you ID document.")
-                .font(Font.custom("Roboto", size: 15))
-                .background(themeManager.currentTheme.sunBackgroundColor) // Apply background color
-                .foregroundColor(themeManager.currentTheme.sunTextColor) // Use sun text color
-            // Full Name
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Full Name")
-                    .font(.custom("Roboto", size: 16))
-                    .foregroundColor(themeManager.currentTheme.sunTextColor)
-                FirebaseTextField(placeHolder: "Enter your full name", text: $viewModel.fullname)
-            }
+        ScrollView{
             
-            // Username and Date Of Birth
-            HStack {
-                // Username
+            VStack(spacing: 20) {
+                Spacer().frame(height:  50)
+
+                Text("Add your personal info")
+                    .font(.custom("Roboto", size: 32))
+                    .fontWeight(.bold)
+                    .foregroundColor(themeManager.currentTheme.sunTextColor)
+                    .padding(.bottom, 10)
+                Text("This info needs to be accurate with you ID document.")
+                    .font(Font.custom("Roboto", size: 15))
+                    .background(themeManager.currentTheme.sunBackgroundColor) // Apply background color
+                    .foregroundColor(themeManager.currentTheme.sunTextColor) // Use sun text color
+                // Full Name
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Username")
+                    Text("Full Name")
                         .font(.custom("Roboto", size: 16))
                         .foregroundColor(themeManager.currentTheme.sunTextColor)
-                    FirebaseTextField(placeHolder: "@username", text: $viewModel.username)
+                    FirebaseTextField(placeHolder: "Enter your full name", text: $viewModel.fullname)
                 }
                 
-                // Date Of Birth
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Date Of Birth")
-                        .font(.custom("Roboto", size: 16))
-                        .foregroundColor(themeManager.currentTheme.sunTextColor)
-                    DatePicker("Select Date", selection: $selectedDate, displayedComponents: .date)
-                        .font(.custom("Roboto", size: 16))
-                        .labelsHidden()
-                        .padding(.vertical, 8)
-                        .background(Color.white)
-                        .cornerRadius(4)
-                        .foregroundColor(themeManager.currentTheme.sunTextColor)
+                // Username and Date Of Birth
+                HStack {
+                    // Username
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Username")
+                            .font(.custom("Roboto", size: 16))
+                            .foregroundColor(themeManager.currentTheme.sunTextColor)
+                        FirebaseTextField(placeHolder: "@username", text: $viewModel.username)
+                    }
+                    
+                    // Date Of Birth
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Date Of Birth")
+                            .font(.custom("Roboto", size: 16))
+                            .foregroundColor(themeManager.currentTheme.sunTextColor)
+                        DatePicker("Select Date", selection: $selectedDate, displayedComponents: .date)
+                            .font(.custom("Roboto", size: 16))
+                            .labelsHidden()
+                            .padding(.vertical, 8)
+                            .background(Color.white)
+                            .cornerRadius(4)
+                            .foregroundColor(themeManager.currentTheme.sunTextColor)
+                    }
                 }
-            }
-            
-            // Mobile No
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Mobile No")
-                    .font(.custom("Roboto", size: 16))
-                    .foregroundColor(themeManager.currentTheme.sunTextColor)
-                FirebaseTextField(placeHolder: "3158636516", text: $viewModel.phoneno)
                 
-            }
-            
-            // Email
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Email")
-                    .font(.custom("Roboto", size: 16))
-                    .foregroundColor(themeManager.currentTheme.sunTextColor)
-                FirebaseTextField(placeHolder: "Ex: email@example.com", text: $viewModel.email)
-            }
-            
-            // Address
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Address")
-                    .font(.custom("Roboto", size: 16))
-                    .foregroundColor(themeManager.currentTheme.sunTextColor)
-                FirebaseTextField(placeHolder: "House number and street name", text: $viewModel.addressline)
-                FirebaseTextField(placeHolder: "City, Street", text: $viewModel.city)
-                FirebaseTextField(placeHolder: "13210", text: $viewModel.postcode)
-                FirebaseTextField(placeHolder: "Country", text: $viewModel.country)
-            }
-            
-            // Continue Button
-            Button(action: {
-                // Check if all fields are filled
-                if viewModel.fullname.isEmpty || viewModel.username.isEmpty || viewModel.phoneno.isEmpty || viewModel.email.isEmpty || viewModel.addressline.isEmpty || viewModel.city.isEmpty || viewModel.postcode.isEmpty || viewModel.country.isEmpty {
-                    // Show an alert or provide feedback to the user that all fields are required
-                    alertMessage = "Please fill in all fields."
-                    TradeMaster.showAlert(message: alertMessage)
-                }else if !isValidMobileNumber(viewModel.phoneno) {
-                    // Show an alert or provide feedback to the user that the mobile number format is incorrect
-                    alertMessage = "Please enter a valid mobile number (10 digits only)."
-                    TradeMaster.showAlert(message: alertMessage)
-                }else if !isValidEmail(viewModel.email) {
-                    // Show an alert or provide feedback to the user that the email format is incorrect
-                    alertMessage = "Please enter a valid email address."
-                    TradeMaster.showAlert(message: alertMessage)
-                }else if !isValidPostcode(viewModel.postcode) {
-                    // Show an alert or provide feedback to the user that the postcode format is incorrect
-                    alertMessage = "Please enter a valid postcode (5 digits only)."
-                    TradeMaster.showAlert(message: alertMessage)
-                }else if !isUserAdult(selectedDate: selectedDate) {
-                    // Show an alert or provide feedback to the user that they must be 18 or older
-                    alertMessage = "You must be 18 years or older to proceed."
-                    TradeMaster.showAlert(message: alertMessage)
-                }  else {
-                    // Perform action to store user details when Continue button is tapped
-                    viewModel.storeUserDetailsInFirestore(viewModel: viewModel, selectedDate: selectedDate,themeManager: themeManager)
+                // Mobile No
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Mobile No")
+                        .font(.custom("Roboto", size: 16))
+                        .foregroundColor(themeManager.currentTheme.sunTextColor)
+                    FirebaseTextField(placeHolder: "3158636516", text: $viewModel.phoneno)
+                    
                 }
-            })
-            {
-                HStack(spacing: 8) {
-                    Text("Continue")
-                        .font(Font.custom("Roboto", size: 20).weight(.medium))
-                        .tracking(0.10)
-                        .lineSpacing(24)
-                        .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.96))
+                
+                // Email
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Email")
+                        .font(.custom("Roboto", size: 16))
+                        .foregroundColor(themeManager.currentTheme.sunTextColor)
+                    FirebaseTextField(placeHolder: "Ex: email@example.com", text: $viewModel.email)
                 }
-                .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                
+                // Address
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Address")
+                        .font(.custom("Roboto", size: 16))
+                        .foregroundColor(themeManager.currentTheme.sunTextColor)
+                    FirebaseTextField(placeHolder: "House number and street name", text: $viewModel.addressline)
+                    FirebaseTextField(placeHolder: "City, Street", text: $viewModel.city)
+                    FirebaseTextField(placeHolder: "13210", text: $viewModel.postcode)
+                    FirebaseTextField(placeHolder: "Country", text: $viewModel.country)
+                }
+                
+                // Continue Button
+                Button(action: {
+                    // Check if all fields are filled
+                    if viewModel.fullname.isEmpty || viewModel.username.isEmpty || viewModel.phoneno.isEmpty || viewModel.email.isEmpty || viewModel.addressline.isEmpty || viewModel.city.isEmpty || viewModel.postcode.isEmpty || viewModel.country.isEmpty {
+                        // Show an alert or provide feedback to the user that all fields are required
+                        alertMessage = "Please fill in all fields."
+                        TradeMaster.showAlert(message: alertMessage)
+                    }else if !isValidMobileNumber(viewModel.phoneno) {
+                        // Show an alert or provide feedback to the user that the mobile number format is incorrect
+                        alertMessage = "Please enter a valid mobile number (10 digits only)."
+                        TradeMaster.showAlert(message: alertMessage)
+                    }else if !isValidEmail(viewModel.email) {
+                        // Show an alert or provide feedback to the user that the email format is incorrect
+                        alertMessage = "Please enter a valid email address."
+                        TradeMaster.showAlert(message: alertMessage)
+                    }else if !isValidPostcode(viewModel.postcode) {
+                        // Show an alert or provide feedback to the user that the postcode format is incorrect
+                        alertMessage = "Please enter a valid postcode (5 digits only)."
+                        TradeMaster.showAlert(message: alertMessage)
+                    }else if !isUserAdult(selectedDate: selectedDate) {
+                        // Show an alert or provide feedback to the user that they must be 18 or older
+                        alertMessage = "You must be 18 years or older to proceed."
+                        TradeMaster.showAlert(message: alertMessage)
+                    }  else {
+                        // Perform action to store user details when Continue button is tapped
+                        viewModel.storeUserDetailsInFirestore(viewModel: viewModel, selectedDate: selectedDate,themeManager: themeManager)
+                    }
+                })
+                {
+                    HStack(spacing: 8) {
+                        Text("Continue")
+                            .font(Font.custom("Roboto", size: 20).weight(.medium))
+                            .tracking(0.10)
+                            .lineSpacing(24)
+                            .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.96))
+                    }
+                    .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                }
+                .frame(width: 358, height: 40)
+                .background(Color(red: 0.07, green: 0.32, blue: 0.45))
+                .cornerRadius(4)
             }
-            .frame(width: 358, height: 40)
-            .background(Color(red: 0.07, green: 0.32, blue: 0.45))
-            .cornerRadius(4)
+            .padding(20)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(themeManager.currentTheme.sunBackgroundColor)
+            .foregroundColor(themeManager.currentTheme.sunTextColor)
+            .background(Color.white)
+            .ignoresSafeArea()
         }
-        .padding(20)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(themeManager.currentTheme.sunBackgroundColor)
-        .foregroundColor(themeManager.currentTheme.sunTextColor)
-        .background(Color.white)
         .ignoresSafeArea()
     }
     

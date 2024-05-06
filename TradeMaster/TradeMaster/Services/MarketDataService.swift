@@ -2,60 +2,31 @@
 //  MarketDataService.swift
 //  TradeMaster
 //
-//  Created by Aishwarya Girish Mensinkai on 5/4/24.
+//  Created by Aishwarya Girish Mensinkai on 5/2/24.
 //
 
 import Foundation
-
+import Combine
 
 class MarketDataService {
-    private let urlString = "https://api.coingecko.com/api/v3/global"
     
-    func fetchMarketData() async throws -> MarketDataModel? {
-        guard let url = URL(string: urlString) else { return nil }
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            let market = try JSONDecoder().decode(GlobalData.self, from: data)
-            return market.data
-        } catch {
-            print("DEBUG: Error \(error.localizedDescription)")
-            return nil
-        }
+    @Published var marketData: MarketDataModel? = nil
+    var marketDataSubscription: AnyCancellable?
+    
+    init() {
+        getData()
     }
-}
-
-extension MarketDataService {
-    func fetchMarketDataWithResult(completion: @escaping(Result<MarketDataModel?, CoinAPIError>) -> Void) {
-        guard let url = URL(string: urlString) else { return }
+    
+    func getData() {
+        guard let url = URL(string: "https://api.coingecko.com/api/v3/global") else { return }
         
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                completion(.failure(.unknownedError(error: error)))
-                return
-            }
-            
-            guard let httpResponse = response as? HTTPURLResponse else {
-                completion(.failure(.requestFailed(description: "Request failed")))
-                return
-            }
-            
-            guard httpResponse.statusCode == 200 else {
-                completion(.failure(.invalidStatusCode(statusCode: httpResponse.statusCode)))
-                return
-            }
-            
-            guard let data = data else {
-                completion(.failure(.invalidData))
-                return
-            }
-            
-            do {
-                let market = try JSONDecoder().decode(GlobalData.self, from: data)
-                completion(.success(market.data))
-            } catch {
-                print("DEBUG: Failed to decode with error \(error)")
-                completion(.failure(.jsonParsingFailure))
-            }
-        }.resume()
+        marketDataSubscription = NetworkingManager.download(url: url)
+            .decode(type: GlobalData.self, decoder: JSONDecoder())
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (returnedGlobalData) in
+                self?.marketData = returnedGlobalData.data
+                self?.marketDataSubscription?.cancel()
+            })
     }
+    
 }

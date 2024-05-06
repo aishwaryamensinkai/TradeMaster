@@ -2,11 +2,10 @@
 //  StatisticModel.swift
 //  TradeMaster
 //
-//  Created by Aishwarya Girish Mensinkai on 5/4/24.
+//  Created by Aishwarya Girish Mensinkai on 5/2/24.
 //
 
 import Foundation
-
 
 struct StatisticModel: Identifiable {
     let id = UUID().uuidString
@@ -20,6 +19,3 @@ struct StatisticModel: Identifiable {
         self.percentageChange = percentageChange
     }
 }
-
-let newModel = StatisticModel(title: "", value: "", percentageChange: nil)
-let newModel2 = StatisticModel(title: "", value: "")

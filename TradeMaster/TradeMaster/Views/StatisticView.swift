@@ -2,12 +2,10 @@
 //  StatisticView.swift
 //  TradeMaster
 //
-//  Created by Aishwarya Girish Mensinkai on 5/4/24.
+//  Created by Aishwarya Girish Mensinkai on 5/2/24.
 //
 
-import Foundation
 import SwiftUI
-
 
 struct StatisticView: View {
     
@@ -20,11 +18,14 @@ struct StatisticView: View {
                 .foregroundColor(Color.themes.secondaryText)
             Text(stat.value)
                 .font(.headline)
-                .foregroundColor(Color.accentColor)
-            HStack {
+                .foregroundColor(Color.themes.accent)
+            
+            HStack(spacing: 4) {
                 Image(systemName: "triangle.fill")
                     .font(.caption2)
-                    .rotationEffect(Angle(degrees: (stat.percentageChange ?? 0) >= 0 ? 0 : 180 ))
+                    .rotationEffect(
+                        Angle(degrees:(stat.percentageChange ?? 0) >= 0 ? 0 : 180))
+                
                 Text(stat.percentageChange?.asPercentString() ?? "")
                     .font(.caption)
                     .bold()
@@ -35,6 +36,17 @@ struct StatisticView: View {
     }
 }
 
-#Preview {
-    StatisticView(stat: StatisticModel(title: "Market Cap", value: "$12.5Bn", percentageChange: 25.34))
+struct StatisticView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            StatisticView(stat: dev.stat1)
+                .previewLayout(.sizeThatFits)
+                .preferredColorScheme(.dark)
+            StatisticView(stat: dev.stat2)
+                .previewLayout(.sizeThatFits)
+            StatisticView(stat: dev.stat3)
+                .previewLayout(.sizeThatFits)
+                .preferredColorScheme(.dark)
+        }
+    }
 }

@@ -2,24 +2,22 @@
 //  ChartView.swift
 //  TradeMaster
 //
-//  Created by Aishwarya Girish Mensinkai on 5/4/24.
+//  Created by Aishwarya Girish Mensinkai on 5/2/24.
 //
 
 import SwiftUI
 
 struct ChartView: View {
-    @StateObject var viewModel: DetailViewModel
     
-   private let data: [Double]
-   private let maxY: Double
-   private let minY: Double
-   private let lineColor: Color
-   private let startingDate: Date
-   private let endingDate: Date
+    private let data: [Double]
+    private let maxY: Double
+    private let minY: Double
+    private let lineColor: Color
+    private let startingDate: Date
+    private let endingDate: Date
     @State private var percentage: CGFloat = 0
     
-    init(coin: Coin) {
-        _viewModel = StateObject(wrappedValue: DetailViewModel(coin: coin))
+    init(coin: CoinModel) {
         data = coin.sparklineIn7D?.price ?? []
         maxY = data.max() ?? 0
         minY = data.min() ?? 0
@@ -34,9 +32,9 @@ struct ChartView: View {
     var body: some View {
         VStack {
             chartView
-            .frame(height: 200)
-            .background(chartBackground)
-            .overlay(chartYAxis.padding(.horizontal, 4), alignment: .leading)
+                .frame(height: 200)
+                .background(chartBackground)
+                .overlay(chartYAxis.padding(.horizontal, 4), alignment: .leading)
             
             chartDateLabels
                 .padding(.horizontal, 4)
@@ -50,9 +48,15 @@ struct ChartView: View {
                 }
             }
         }
+        
     }
 }
 
+struct ChartView_Previews: PreviewProvider {
+    static var previews: some View {
+        ChartView(coin: dev.coin)
+    }
+}
 
 extension ChartView {
     
@@ -62,20 +66,24 @@ extension ChartView {
                 for index in data.indices {
                     
                     let xPosition = geometry.size.width / CGFloat(data.count) * CGFloat(index + 1)
-                   
+                    
                     let yAxis = maxY - minY
                     
                     let yPosition = (1 - CGFloat((data[index] - minY) / yAxis)) * geometry.size.height
-                 
+                    
                     if index == 0 {
                         path.move(to: CGPoint(x: xPosition, y: yPosition))
                     }
                     path.addLine(to: CGPoint(x: xPosition, y: yPosition))
+                    
                 }
             }
-            .trim(from: 0, to: 1)
-            .stroke(lineColor, style: StrokeStyle(lineWidth: 1, lineCap: .round, lineJoin: .round))
-            .opacity(0.6)
+            .trim(from: 0, to: percentage)
+            .stroke(lineColor, style: StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round))
+            .shadow(color: lineColor, radius: 10, x: 0.0, y: 10)
+            .shadow(color: lineColor.opacity(0.5), radius: 10, x: 0.0, y: 20)
+            .shadow(color: lineColor.opacity(0.2), radius: 10, x: 0.0, y: 30)
+            .shadow(color: lineColor.opacity(0.1), radius: 10, x: 0.0, y: 40)
         }
     }
     
@@ -90,12 +98,12 @@ extension ChartView {
     }
     
     private var chartYAxis: some View {
-        VStack() {
-            Text(formatNumber(maxY))
+        VStack {
+            Text(maxY.formattedWithAbbreviations())
             Spacer()
-            Text(formatNumber((maxY + minY) / 2))
+            Text(((maxY + minY) / 2).formattedWithAbbreviations())
             Spacer()
-            Text(formatNumber(minY))
+            Text(minY.formattedWithAbbreviations())
         }
     }
     
@@ -107,17 +115,4 @@ extension ChartView {
         }
     }
     
-    func formatNumber(_ number: Double) -> String {
-            if number < 1000 {
-                return "\(number.asCurrencyWith6Decimals())"
-            } else if number < 1000000 {
-                return String(format: "%.1fK", Double(number) / 1000)
-            } else if number < 1000000000 {
-                return String(format: "%.1fM", Double(number) / 1000000)
-            } else {
-                return String(format: "%.1fB", Double(number) / 1000000000)
-            }
-        }
-    
 }
-

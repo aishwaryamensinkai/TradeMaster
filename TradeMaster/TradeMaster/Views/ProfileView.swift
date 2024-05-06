@@ -12,47 +12,59 @@ struct ProfileView: View {
     @State private var isEditing = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Spacer().frame(height: 50) // Add some top space
+        ScrollView{
             
-            Text("Your Profile")
-                .font(.system(size: 36, weight: .bold))
-                .foregroundColor(.blue)
-            
-            Divider() // Add a divider for visual separation
-            
-            ProfileField(title: "Full Name", value: $viewModel.fullname, isEditing: $isEditing, icon: "person")
-            ProfileField(title: "Username", value: $viewModel.username, isEditing: $isEditing, icon: "person")
-            ProfileField(title: "Mobile No", value: $viewModel.phoneno, isEditing: $isEditing, icon: "phone")
-            ProfileField(title: "Email", value: $viewModel.email, isEditing: $isEditing, icon: "envelope")
-            ProfileField(title: "Address", value: $viewModel.addressline, isEditing: $isEditing, icon: "house")
-            ProfileField(title: "City", value: $viewModel.city, isEditing: $isEditing, icon: "house")
-            ProfileField(title: "Postcode", value: $viewModel.postcode, isEditing: $isEditing, icon: "house")
-            ProfileField(title: "Country", value: $viewModel.country, isEditing: $isEditing, icon: "house")
-            
-            Spacer() // Pushes the button to the bottom
-            
-            Button(action: {
-                isEditing.toggle()
-                viewModel.updateUserData()
-            }) {
-                Text(isEditing ? "Save" : "Edit")
-                    .font(.system(size: 20))
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .padding(.vertical, 12)
-                    .padding(.horizontal, 30)
-                    .background(Color.blue)
-                    .cornerRadius(10)
+            VStack(alignment: .leading, spacing: 20) {
+                Button(action: {
+                    // Action for going back
+                    let themeManager = ThemeManager() // Create an instance of ThemeManager
+                    navigateToMainPage(themeManager: themeManager)
+                }) {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.blue)
+                        .font(.title)
+                }
+                Text("Your Profile")
+                    .font(.system(size: 36, weight: .bold))
+                    .foregroundColor(.blue)
+                
+                Divider() // Add a divider for visual separation
+                
+                ProfileField(title: "Full Name", value: $viewModel.fullname, isEditing: $isEditing, icon: "person")
+                ProfileField(title: "Username", value: $viewModel.username, isEditing: $isEditing, icon: "person")
+                ProfileField(title: "Mobile No", value: $viewModel.phoneno, isEditing: $isEditing, icon: "phone")
+                ProfileField(title: "Email", value: $viewModel.email, isEditing: $isEditing, icon: "envelope")
+                ProfileField(title: "Address", value: $viewModel.addressline, isEditing: $isEditing, icon: "house")
+                ProfileField(title: "City", value: $viewModel.city, isEditing: $isEditing, icon: "house")
+                ProfileField(title: "Postcode", value: $viewModel.postcode, isEditing: $isEditing, icon: "house")
+                ProfileField(title: "Country", value: $viewModel.country, isEditing: $isEditing, icon: "house")
+                
+                Spacer() // Pushes the button to the bottom
+                
+                Button(action: {
+                    isEditing.toggle()
+                    viewModel.updateUserData()
+                }) {
+                    Text(isEditing ? "Save" : "Edit")
+                        .font(.system(size: 20))
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .padding(.vertical, 12)
+                        .padding(.horizontal, 30)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                }
             }
+            .padding(20)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.white)
+            .onAppear {
+                viewModel.fetchUserData()
+            }
+            .edgesIgnoringSafeArea(.all)
+            .navigationBarHidden(true) // Hide the navigation bar
+            
         }
-        .padding(20)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.white)
-        .onAppear {
-            viewModel.fetchUserData()
-        }
-        .edgesIgnoringSafeArea(.all)
     }
 }
 

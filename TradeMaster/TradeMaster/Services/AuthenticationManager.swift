@@ -1,9 +1,6 @@
-//
 //  AuthenticationManager.swift
 //  TradeMaster
-//
 //  Created by Aishwarya Girish Mensinkai on 4/30/24.
-//
 
 import Foundation
 import FirebaseAuth

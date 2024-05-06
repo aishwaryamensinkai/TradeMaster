@@ -2,159 +2,176 @@
 //  DetailView.swift
 //  TradeMaster
 //
-//  Created by Aishwarya Girish Mensinkai on 5/4/24.
+//  Created by Aishwarya Girish Mensinkai on 5/2/24.
 //
 
 import SwiftUI
 
-import Kingfisher
+struct DetailLoadingView: View {
+    
+    @Binding var coin: CoinModel?
+
+    var body: some View {
+        ZStack {
+            if let coin = coin {
+                DetailView(coin: coin)
+            }
+        }
+    }
+    
+}
 
 struct DetailView: View {
-    @StateObject var viewModel: DetailViewModel
+    
+    @StateObject private var vm: DetailViewModel
     @State private var showFullDescription: Bool = false
     private let columns: [GridItem] = [
         GridItem(.flexible()),
         GridItem(.flexible()),
     ]
-    
     private let spacing: CGFloat = 30
     
-    init(coin: Coin) {
-        _viewModel = StateObject(wrappedValue: DetailViewModel(coin: coin))
+    init(coin: CoinModel) {
+        _vm = StateObject(wrappedValue: DetailViewModel(coin: coin))
     }
     
     var body: some View {
         ScrollView {
             VStack {
-                ChartView(coin: viewModel.coin)
+                ChartView(coin: vm.coin)
                     .padding(.vertical)
-                
-                VStack(spacing: 20) {
-                    Text("Overview")
-                        .font(.title)
-                        .bold()
-                        .foregroundColor(Color.black)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    Divider()
-                    
-                    ZStack {
-                        if let coinDescription = viewModel.coinDescription, !coinDescription.isEmpty {
-                            VStack(alignment: .leading) {
-                                Text(coinDescription)
-                                    .lineLimit(showFullDescription ? nil : 3)
-                                    .font(.callout)
-                                    .foregroundColor(Color.themes.secondaryText)
-                                
-                                Button(action: {
-                                    withAnimation(.easeOut) {
-                                        showFullDescription.toggle()
-                                    }
-                                }, label: {
-                                    Text(showFullDescription ? "Less" : "Read more...")
-                                        .font(.caption)
-                                        .fontWeight(.bold)
-                                        .padding(.vertical, 4)
-                                })
-                                .accentColor(.blue)
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                    }
-                    
-                    LazyVGrid(
-                        columns: columns,
-                        alignment: .leading,
-                        spacing: spacing,
-                        pinnedViews: [],
-                        content: {
-                            ForEach(viewModel.overviewStatistics) { stat in
-                                StatisticView(stat: stat)
-                            }
-                        })
-                    
-                    Text("Aditional Details")
-                        .font(.title)
-                        .bold()
-                        .foregroundColor(Color.black)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    Divider()
-                    
-                    LazyVGrid(
-                        columns: columns,
-                        alignment: .leading,
-                        spacing: spacing,
-                        pinnedViews: [],
-                        content: {
-                            ForEach(viewModel.additionalStatistics) { stat in
-                                StatisticView(stat: stat)
-                                
-                            }
-                        })
-                    
-                    VStack(alignment: .leading, spacing: 20) {
-                        if let websiteString = viewModel.websiteURL, let url = URL(string: websiteString) {
-                            Link("Website", destination: url)
-                        }
-                        
-                        if let reddittring = viewModel.redditURL, let url = URL(string: reddittring) {
-                            Link("Reddit", destination: url)
-                        }
-                    }
-                    .accentColor(.blue)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(.headline)
-                    
-                    HStack(spacing: 20) {
-                        Button(action: {
-                            // Action for Buy button
-                        }) {
-                            Text("Buy")
-                                .padding()
-                                .foregroundColor(.white)
-                                .background(Color.blue)
-                                .cornerRadius(8)
-                        }
-                        
-                        Button(action: {
-                            // Action for Sell button
-                        }) {
-                            Text("Sell")
-                                .padding()
-                                .foregroundColor(.white)
-                                .background(Color.red)
-                                .cornerRadius(8)
-                        }
-                        
-                        Button(action: {
-                            // Action for Watchlist button
 
-                        }) {
-                            Text("Watchlist")
-                                .padding()
-                                .foregroundColor(.white)
-                                .background(Color.green)
-                                .cornerRadius(8)
-                        }
-                    }
+                VStack(spacing: 20) {
+                    overviewTitle
+                    Divider()
+                    descriptionSection
+                    overviewGrid
+                    additionalTitle
+                    Divider()
+                    additionalGrid
+                    websiteSection
                 }
                 .padding()
             }
-            
         }
-        .navigationTitle(viewModel.coin.name)
+        .background(
+            Color.themes.background
+                .ignoresSafeArea()
+        )
+        .navigationTitle(vm.coin.name)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                HStack {
-                        Text(viewModel.coin.symbol.uppercased())
-                            .font(.headline)
-                            .foregroundColor(Color.themes.secondaryText)
-                    KFImage(viewModel.coin.image)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 25, height: 25)
-                }
+                navigationBarTrailingItems
             }
         }
+    }
+}
+
+struct DetailView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            DetailView(coin: dev.coin)
+        }
+    }
+}
+
+extension DetailView {
+    
+    private var navigationBarTrailingItems: some View {
+        HStack {
+            Text(vm.coin.symbol.uppercased())
+                .font(.headline)
+                .foregroundColor(Color.themes.secondaryText)
+            CoinImageView(coin: vm.coin)
+                .frame(width: 25, height: 25)
+        }
+    }
+    
+    private var overviewTitle: some View {
+        Text("Overview")
+            .font(.title)
+            .bold()
+            .foregroundColor(Color.themes.accent)
+            .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    private var additionalTitle: some View {
+        Text("Additional Details")
+            .font(.title)
+            .bold()
+            .foregroundColor(Color.themes.accent)
+            .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    private var descriptionSection: some View {
+        ZStack {
+            if let coinDescription = vm.coinDescription,
+               !coinDescription.isEmpty {
+                VStack(alignment: .leading) {
+                    Text(coinDescription)
+                        .lineLimit(showFullDescription ? nil : 3)
+                        .font(.callout)
+                        .foregroundColor(Color.themes.secondaryText)
+
+                    Button(action: {
+                        withAnimation(.easeInOut) {
+                            showFullDescription.toggle()
+                        }
+                    }, label: {
+                        Text(showFullDescription ? "Less" : "Read more..")
+                            .font(.caption)
+                            .fontWeight(.bold)
+                            .padding(.vertical, 4)
+                    })
+                    .accentColor(.blue)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        }
+    }
+    
+    private var overviewGrid: some View {
+        LazyVGrid(
+            columns: columns,
+            alignment: .leading,
+            spacing: spacing,
+            pinnedViews: [],
+            content: {
+                ForEach(vm.overviewStatistics) { stat in
+                    StatisticView(stat: stat)
+                }
+        })
+    }
+    
+    private var additionalGrid: some View {
+        LazyVGrid(
+            columns: columns,
+            alignment: .leading,
+            spacing: spacing,
+            pinnedViews: [],
+            content: {
+                ForEach(vm.additionalStatistics) { stat in
+                    StatisticView(stat: stat)
+                }
+        })
+    }
+    
+    private var websiteSection: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            if let websiteString = vm.websiteURL,
+               let url = URL(string: websiteString) {
+                Link("Website", destination: url)
+            }
+            
+            if let redditString = vm.redditURL,
+               let url = URL(string: redditString) {
+                Link("Reddit", destination: url)
+            }
+            
+        }
+        .accentColor(.blue)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .font(.headline)
     }
     
 }
