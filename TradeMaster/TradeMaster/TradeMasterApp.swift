@@ -6,13 +6,23 @@
 //
 
 import SwiftUI
-import SwiftData
+import Firebase
 
 @main
 struct TradeMasterApp: App {
-    let themeManager = ThemeManager() // Initialize ThemeManager
+    // Initialize ThemeManager
+    let themeManager = ThemeManager()
+    
+    init(){
+        FirebaseApp.configure()
+        print("Firebase configured")
+    }
+    
     var body: some Scene {
         WindowGroup {
-            SplashScreenView().environmentObject(themeManager) // Provide the theme manager
-        }    }
+            // Pass the themeManager as an environment object to SplashScreenView
+            SplashScreenView()
+                .environmentObject(themeManager)
+        }
+    }
 }

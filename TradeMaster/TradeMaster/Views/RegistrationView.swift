@@ -12,20 +12,6 @@ struct RegistrationView: View {
         
     var body: some View {
         VStack {
-            HStack {
-                Spacer()
-                Button(action: {
-                    // Action when the button is tapped
-                }) {
-                    Text("Skip")
-                        .font(Font.custom("Roboto", size: 20).weight(.medium))
-                        .tracking(0.15)
-                        .lineSpacing(20)
-                        .foregroundColor(Color(red: 0.07, green: 0.32, blue: 0.45))
-                }
-                .padding(EdgeInsets(top: 16, leading: 0, bottom: 0, trailing: 16))
-            }
-            .padding(.top, 16)
             
             Spacer().frame(height: 40)
             

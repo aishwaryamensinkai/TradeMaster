@@ -6,30 +6,38 @@
 //
 
 import SwiftUI
+import FirebaseAuth
+import GoogleSignIn
+import GoogleSignInSwift
 
 struct SignIn: View {
     @EnvironmentObject var themeManager: ThemeManager // Inject the theme manager
-    @State private var email: String = ""
-    @State private var password: String = ""
+    @StateObject private var viewModel = SignInEmailViewModel()
+    var message : String = ""
+    @State private var showAlert = false // State variable to control the presentation of the alert
+    @State private var alertMessage = "" // State variable to hold the message for the alert
+    @StateObject private var googleModel = GoogleSignIn()
 
     var body: some View {
         VStack {
             VStack(alignment: .leading, spacing: 50) {
                 Button(action: {
-                    navigateBack()
+                    navigateBack(themeManager: themeManager)
                 }) {
                     Image(systemName: "arrow.left")
                         .font(Font.custom("Roboto", size: 20).weight(.medium))
                         .tracking(0.15)
                         .lineSpacing(20)
-                        .foregroundColor(Color(red: 0.07, green: 0.32, blue: 0.45))
+                        .foregroundColor(themeManager.currentTheme.sunTextColor) // Use sun text color for demonstration
+                        .background(themeManager.currentTheme.sunBackgroundColor) // Use sun background color for demonstration
                 }
                 .padding(.horizontal, 16) // Adjusted horizontal padding
                 .frame(maxWidth: .infinity, alignment: .leading) // Align to the leading edge
                 
-                HStack(alignment: .top, spacing: 0) {
+                HStack(spacing: 0) {
                     Button(action: {
                         // Action for Sign In button
+                        navigateToSignIn(themeManager: themeManager)
                     }) {
                         Text("Sign In")
                             .font(Font.custom("Roboto", size: 16).weight(.medium))
@@ -48,6 +56,7 @@ struct SignIn: View {
                     
                     Button(action: {
                         // Action for Sign Up button
+                        navigateToSignUp(themeManager: themeManager)
                     }) {
                         Text("Sign Up")
                             .font(Font.custom("Roboto", size: 16).weight(.medium))
@@ -64,14 +73,10 @@ struct SignIn: View {
                             .stroke(Color(red: 0.80, green: 0.84, blue: 0.91), lineWidth: 0.50)
                     )
                 }
-                .frame(width: 366, height: 44)
-                .background(Color(red: 0.96, green: 0.97, blue: 0.99))
-                .cornerRadius(4)
                 
               Text("Sign In")
                 .font(Font.custom("Roboto", size: 24).weight(.medium))
                 .lineSpacing(32)
-                .foregroundColor(Color(red: 0.07, green: 0.07, blue: 0.07))
                 .foregroundColor(themeManager.currentTheme.sunTextColor) // Use sun text color for demonstration
                 .background(themeManager.currentTheme.sunBackgroundColor) // Use sun background color for demonstration
                 
@@ -81,33 +86,10 @@ struct SignIn: View {
                     .font(Font.custom("Roboto", size: 12))
                     .tracking(0.40)
                     .lineSpacing(16)
-                    .foregroundColor(Color(red: 0.07, green: 0.07, blue: 0.07))
                     .foregroundColor(themeManager.currentTheme.sunTextColor) // Use sun text color for demonstration
                     .background(themeManager.currentTheme.sunBackgroundColor) // Use sun background color for demonstration
-                    
-                    Button(action: {
-                        // Action when the "Sign In with Phone Number" is clicked
-                        navigateToNumber()
-                    }) {
-                        Text("Sign In with Phone Number")
-                            .font(Font.custom("Roboto", size: 14))
-                            .tracking(0.40)
-                            .lineSpacing(16)
-                            .foregroundColor(Color(red: 0.07, green: 0.32, blue: 0.45))
-                    }
-                    .buttonStyle(PlainButtonStyle()) // Use PlainButtonStyle to remove default button styling
                 }
-                  
-                TextField("Enter your email", text: $email)
-                      .font(Font.custom("Roboto", size: 16))
-                      .padding(EdgeInsets(top: 10, leading: 16, bottom: 10, trailing: 16))
-                      .frame(width: 358)
-                      .background(Color(red: 0.98, green: 0.99, blue: 1))
-                      .cornerRadius(4)
-                      .overlay(
-                          RoundedRectangle(cornerRadius: 4)
-                              .stroke(Color(red: 0.80, green: 0.84, blue: 0.91), lineWidth: 0.50)
-                      )
+                  FirebaseTextField(placeHolder: "Enter your email", text: $viewModel.email)
 
               }
               VStack(alignment: .leading, spacing: 4) {
@@ -115,24 +97,28 @@ struct SignIn: View {
                   .font(Font.custom("Roboto", size: 14))
                   .tracking(0.40)
                   .lineSpacing(16)
-                  .foregroundColor(Color(red: 0.07, green: 0.07, blue: 0.07))
                   .foregroundColor(themeManager.currentTheme.sunTextColor) // Use sun text color for demonstration
                   .background(themeManager.currentTheme.sunBackgroundColor) // Use sun background color for demonstration
                   
-                  SecureField("Enter your password", text: $password)
-                      .font(Font.custom("Roboto", size: 16))
-                      .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 48)) // Adjusted padding
-                      .frame(width: 358)
-                      .background(Color(red: 0.98, green: 0.99, blue: 1))
-                      .cornerRadius(4)
-                      .overlay(
-                          RoundedRectangle(cornerRadius: 4)
-                              .stroke(Color(red: 0.80, green: 0.84, blue: 0.91), lineWidth: 0.50)
-                      )
-
+                  //password
+                  FirebaseSecureField(placeHolder: "Enter your password", text: $viewModel.password, showPassword: $viewModel.showPassword)
+                  
                   Spacer()
                   Button(action: {
-                      // Action when the "Forgot Password?" is clicked
+                      // Check if email is valid
+                          guard isValidEmail(viewModel.email) else {
+                              // Show an alert if the email is invalid
+                              alertMessage = "Please enter a valid email address."
+                              showAlert = true
+                              return
+                          }
+                          
+                          // Call resetPassword function with email
+                          viewModel.resetPassword(email: viewModel.email) { message in
+                              // Show an alert with the reset password message
+                              alertMessage = message
+                              showAlert = true
+                          }
                   }) {
                       Text("Forgot Password?")
                           .font(Font.custom("Roboto", size: 12))
@@ -145,7 +131,24 @@ struct SignIn: View {
               }
                 
                 Button(action: {
-                    // Action to perform when the button is tapped
+                    // Check if email is valid and password length is at least 6 characters
+                    guard isValidEmail(viewModel.email) else {
+                        TradeMaster.showAlert(message: "Please enter a valid email address.")
+                        return
+                    }
+                                   
+                    guard viewModel.password.count >= 6 else {
+                        TradeMaster.showAlert(message: "Password must be at least 6 characters long.")
+                        return
+                    }
+                    // Check if email or password is empty
+                    guard !viewModel.email.isEmpty && !viewModel.password.isEmpty else {
+                        TradeMaster.showAlert(message: "Please provide both email and password to sign in.")
+                        return
+                    }
+                    
+                    // Login the user if email and password are provided
+                    viewModel.signinUserWithEmail(themeManager: themeManager)
                 }) {
                     HStack(spacing: 8) {
                         Text("Sign In")
@@ -163,10 +166,9 @@ struct SignIn: View {
                 
                 HStack(spacing: 16) {
                   VStack(alignment: .leading, spacing: 8) {
-                    Rectangle()
-                      .foregroundColor(.clear)
+                    RoundedRectangle(cornerRadius: 2)
+                      .fill(Color(red: 0.80, green: 0.84, blue: 0.91))
                       .frame(width: 155.50, height: 2)
-                      .background(Color(red: 0.80, green: 0.84, blue: 0.91))
                   }
                   .padding(EdgeInsets(top: 3, leading: 0, bottom: 3, trailing: 0))
                   .frame(maxWidth: .infinity)
@@ -176,19 +178,25 @@ struct SignIn: View {
                     .lineSpacing(20)
                     .foregroundColor(Color(red: 0.83, green: 0.83, blue: 0.83))
                   VStack(alignment: .leading, spacing: 8) {
-                    Rectangle()
-                      .foregroundColor(.clear)
+                    RoundedRectangle(cornerRadius: 2)
+                      .fill(Color(red: 0.80, green: 0.84, blue: 0.91))
                       .frame(width: 155.50, height: 2)
-                      .background(Color(red: 0.80, green: 0.84, blue: 0.91))
                   }
                   .padding(EdgeInsets(top: 3, leading: 0, bottom: 3, trailing: 0))
                   .frame(maxWidth: .infinity)
                 }
                 .frame(width: 358, height: 20)
                 
-                
                 Button(action: {
                     // Action to perform when the button is tapped
+                    Task{
+                        do{
+                            try await googleModel.signInGoogle(themeManager: themeManager)
+//                            navigateToWelcome(themeManager: themeManager)
+                        } catch{
+                            print(error)
+                        }
+                    }
                 }) {
                     HStack(spacing: 8) {
                         // Custom Google icon
@@ -212,54 +220,16 @@ struct SignIn: View {
                 .frame(width: 358, height: 40)
                 .background(Color(red: 0.96, green: 0.97, blue: 0.99))
                 .cornerRadius(4)
-
-
             }
             .frame(width: 358, height: 220)
+                   
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(themeManager.currentTheme.sunBackgroundColor) // Apply background color
         .foregroundColor(themeManager.currentTheme.sunTextColor) // Use sun text color
         .background(Color.white)
         .ignoresSafeArea()
-    }
 
-    func navigateBack() {
-        // Create an instance of the next view
-        let RegistrationViewPage = RegistrationView().environmentObject(themeManager)
-
-        // Present the next view using NavigationView
-        let nextView = NavigationView {
-            RegistrationViewPage
-        }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
-        }
-    }
-
-    func navigateToNumber() {
-        // Create an instance of the next view
-        let SignInNumberViewPage = SignInNumber().environmentObject(themeManager)
-
-        // Present the next view using NavigationView
-        let nextView = NavigationView {
-            SignInNumberViewPage
-        }
-
-        // Get the relevant window scene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                // Present the navigation view
-                window.rootViewController = UIHostingController(rootView: nextView)
-                window.makeKeyAndVisible()
-            }
-        }
     }
 }
 
